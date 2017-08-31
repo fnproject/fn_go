@@ -123,7 +123,7 @@ func NewPatchAppsAppRoutesRouteNotFound() *PatchAppsAppRoutesRouteNotFound {
 
 /*PatchAppsAppRoutesRouteNotFound handles this case with default header values.
 
-App does not exist.
+App / Route does not exist.
 */
 type PatchAppsAppRoutesRouteNotFound struct {
 	Payload *models.Error

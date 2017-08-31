@@ -24,32 +24,29 @@ type Route struct {
 	Config map[string]string `json:"config,omitempty"`
 
 	// Payload format sent into function.
-	Format interface{} `json:"format,omitempty"`
+	Format string `json:"format,omitempty"`
 
 	// Map of http headers that will be sent with the response
 	Headers map[string][]string `json:"headers,omitempty"`
 
 	// Hot functions idle timeout before termination. Value in Seconds
-	IDLETimeout *int64 `json:"idle_timeout,omitempty"`
+	IDLETimeout *int32 `json:"idle_timeout,omitempty"`
 
 	// Name of Docker image to use in this route. You should include the image tag, which should be a version number, to be more accurate. Can be overridden on a per route basis with route.image.
 	Image string `json:"image,omitempty"`
 
-	// Maximum number of hot functions concurrency
-	MaxConcurrency int32 `json:"max_concurrency,omitempty"`
-
 	// Max usable memory for this route (MiB).
-	Memory int64 `json:"memory,omitempty"`
+	Memory uint64 `json:"memory,omitempty"`
 
 	// URL path that will be matched to this route
 	// Read Only: true
 	Path string `json:"path,omitempty"`
 
 	// Timeout for executions of this route. Value in Seconds
-	Timeout *int64 `json:"timeout,omitempty"`
+	Timeout *int32 `json:"timeout,omitempty"`
 
 	// Route type
-	Type interface{} `json:"type,omitempty"`
+	Type string `json:"type,omitempty"`
 }
 
 /* polymorph Route config false */
@@ -61,8 +58,6 @@ type Route struct {
 /* polymorph Route idle_timeout false */
 
 /* polymorph Route image false */
-
-/* polymorph Route max_concurrency false */
 
 /* polymorph Route memory false */
 
@@ -100,7 +95,7 @@ func (m *Route) Validate(formats strfmt.Registry) error {
 var routeTypeFormatPropEnum []interface{}
 
 func init() {
-	var res []interface{}
+	var res []string
 	if err := json.Unmarshal([]byte(`["default","http","json"]`), &res); err != nil {
 		panic(err)
 	}
@@ -109,8 +104,17 @@ func init() {
 	}
 }
 
+const (
+	// RouteFormatDefault captures enum value "default"
+	RouteFormatDefault string = "default"
+	// RouteFormatHTTP captures enum value "http"
+	RouteFormatHTTP string = "http"
+	// RouteFormatJSON captures enum value "json"
+	RouteFormatJSON string = "json"
+)
+
 // prop value enum
-func (m *Route) validateFormatEnum(path, location string, value interface{}) error {
+func (m *Route) validateFormatEnum(path, location string, value string) error {
 	if err := validate.Enum(path, location, value, routeTypeFormatPropEnum); err != nil {
 		return err
 	}
@@ -121,6 +125,11 @@ func (m *Route) validateFormat(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Format) { // not required
 		return nil
+	}
+
+	// value enum
+	if err := m.validateFormatEnum("format", "body", m.Format); err != nil {
+		return err
 	}
 
 	return nil
@@ -142,7 +151,7 @@ func (m *Route) validateHeaders(formats strfmt.Registry) error {
 var routeTypeTypePropEnum []interface{}
 
 func init() {
-	var res []interface{}
+	var res []string
 	if err := json.Unmarshal([]byte(`["sync","async"]`), &res); err != nil {
 		panic(err)
 	}
@@ -151,8 +160,15 @@ func init() {
 	}
 }
 
+const (
+	// RouteTypeSync captures enum value "sync"
+	RouteTypeSync string = "sync"
+	// RouteTypeAsync captures enum value "async"
+	RouteTypeAsync string = "async"
+)
+
 // prop value enum
-func (m *Route) validateTypeEnum(path, location string, value interface{}) error {
+func (m *Route) validateTypeEnum(path, location string, value string) error {
 	if err := validate.Enum(path, location, value, routeTypeTypePropEnum); err != nil {
 		return err
 	}
@@ -163,6 +179,11 @@ func (m *Route) validateType(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Type) { // not required
 		return nil
+	}
+
+	// value enum
+	if err := m.validateTypeEnum("type", "body", m.Type); err != nil {
+		return err
 	}
 
 	return nil

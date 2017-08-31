@@ -12,9 +12,9 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/fnproject/fn_go/client/apps"
+	"github.com/fnproject/fn_go/client/call"
+	"github.com/fnproject/fn_go/client/operations"
 	"github.com/fnproject/fn_go/client/routes"
-	"github.com/fnproject/fn_go/client/tasks"
-	"github.com/fnproject/fn_go/client/version"
 )
 
 // Default fn HTTP client.
@@ -60,11 +60,11 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Fn {
 
 	cli.Apps = apps.New(transport, formats)
 
+	cli.Call = call.New(transport, formats)
+
+	cli.Operations = operations.New(transport, formats)
+
 	cli.Routes = routes.New(transport, formats)
-
-	cli.Tasks = tasks.New(transport, formats)
-
-	cli.Version = version.New(transport, formats)
 
 	return cli
 }
@@ -112,11 +112,11 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type Fn struct {
 	Apps *apps.Client
 
+	Call *call.Client
+
+	Operations *operations.Client
+
 	Routes *routes.Client
-
-	Tasks *tasks.Client
-
-	Version *version.Client
 
 	Transport runtime.ClientTransport
 }
@@ -127,10 +127,10 @@ func (c *Fn) SetTransport(transport runtime.ClientTransport) {
 
 	c.Apps.SetTransport(transport)
 
+	c.Call.SetTransport(transport)
+
+	c.Operations.SetTransport(transport)
+
 	c.Routes.SetTransport(transport)
-
-	c.Tasks.SetTransport(transport)
-
-	c.Version.SetTransport(transport)
 
 }
