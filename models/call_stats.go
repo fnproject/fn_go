@@ -14,12 +14,12 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// CallsWrapperCalls calls wrapper calls
-// swagger:model callsWrapperCalls
-type CallsWrapperCalls []*Call
+// CallStats A histogram of stats for a call, each is a snapshot of a calls state at the timestamp.
+// swagger:model callStats
+type CallStats []*Stat
 
-// Validate validates this calls wrapper calls
-func (m CallsWrapperCalls) Validate(formats strfmt.Registry) error {
+// Validate validates this call stats
+func (m CallStats) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	for i := 0; i < len(m); i++ {
