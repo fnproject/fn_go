@@ -12,19 +12,22 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// Error error
-// swagger:model Error
-type Error struct {
+// Stat stat
+// swagger:model Stat
+type Stat struct {
 
-	// error
-	Error *ErrorBody `json:"error,omitempty"`
+	// metrics
+	Metrics *StatMetrics `json:"metrics,omitempty"`
+
+	// timestamp
+	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
-// Validate validates this error
-func (m *Error) Validate(formats strfmt.Registry) error {
+// Validate validates this stat
+func (m *Stat) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateError(formats); err != nil {
+	if err := m.validateMetrics(formats); err != nil {
 		// prop
 		res = append(res, err)
 	}
@@ -35,17 +38,17 @@ func (m *Error) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Error) validateError(formats strfmt.Registry) error {
+func (m *Stat) validateMetrics(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Error) { // not required
+	if swag.IsZero(m.Metrics) { // not required
 		return nil
 	}
 
-	if m.Error != nil {
+	if m.Metrics != nil {
 
-		if err := m.Error.Validate(formats); err != nil {
+		if err := m.Metrics.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("error")
+				return ve.ValidateName("metrics")
 			}
 			return err
 		}
@@ -55,7 +58,7 @@ func (m *Error) validateError(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (m *Error) MarshalBinary() ([]byte, error) {
+func (m *Stat) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -63,8 +66,8 @@ func (m *Error) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *Error) UnmarshalBinary(b []byte) error {
-	var res Error
+func (m *Stat) UnmarshalBinary(b []byte) error {
+	var res Stat
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
