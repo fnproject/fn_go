@@ -39,7 +39,7 @@ func (a *Client) GetAppsAppCallsCallLog(params *GetAppsAppCallsCallLogParams) (*
 		ID:                 "GetAppsAppCallsCallLog",
 		Method:             "GET",
 		PathPattern:        "/apps/{app}/calls/{call}/log",
-		ProducesMediaTypes: []string{"application/json"},
+		ProducesMediaTypes: []string{"text/plain"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
