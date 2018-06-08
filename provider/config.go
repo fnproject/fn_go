@@ -6,7 +6,6 @@ const (
 	//CfgFnAPIURL is a config key used as the default URL for resolving the API server - different providers may generate URLs in their own way
 	CfgFnAPIURL  = "api-url"
 	CfgFnCallURL = "call-url"
-	CfgFnToken   = "token"
 )
 
 // ConfigSource abstracts  loading configuration keys from an underlying configuration system such as Viper

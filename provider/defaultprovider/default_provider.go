@@ -12,10 +12,19 @@ import (
 	"net/url"
 )
 
+const CfgFnToken = "token"
+const CfgFnUser = "user"
+const CfgFnPasswd = "password"
+
+
 // Provider is the default Auth provider
 type Provider struct {
 	// Optional token to add as  bearer token to auth calls
 	Token string
+	// Optional basic auth user
+	User string
+	// Optional basic auth password
+	Password string
 	// API url to use for FN API interactions
 	FnApiUrl *url.URL
 	// URL to use for FN call interactions
@@ -43,7 +52,9 @@ func NewFromConfig(configSource provider.ConfigSource, _ provider.PassPhraseSour
 		}
 	}
 	return &Provider{
-		Token:    configSource.GetString(provider.CfgFnToken),
+		Token:    configSource.GetString(CfgFnToken),
+		User:    configSource.GetString(CfgFnUser),
+		Password:    configSource.GetString(CfgFnPasswd),
 		FnApiUrl: apiUrl,
 		CallUrl:  callUrl,
 	}, nil
@@ -64,6 +75,8 @@ func (dp *Provider) APIClient() *client.Fn {
 	transport := openapi.New(dp.FnApiUrl.Host, dp.FnApiUrl.Path, []string{dp.FnApiUrl.Scheme})
 	if dp.Token != "" {
 		transport.DefaultAuthentication = openapi.BearerToken(dp.Token)
+	} else if dp.User != "" {
+		transport.DefaultAuthentication = openapi.BasicAuth(dp.User, dp.Password)
 	}
 
 	return client.New(transport, strfmt.Default)
