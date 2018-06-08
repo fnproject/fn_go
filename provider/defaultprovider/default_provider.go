@@ -16,7 +16,6 @@ const CfgFnToken = "token"
 const CfgFnUser = "user"
 const CfgFnPasswd = "password"
 
-
 // Provider is the default Auth provider
 type Provider struct {
 	// Optional token to add as  bearer token to auth calls
@@ -53,8 +52,8 @@ func NewFromConfig(configSource provider.ConfigSource, _ provider.PassPhraseSour
 	}
 	return &Provider{
 		Token:    configSource.GetString(CfgFnToken),
-		User:    configSource.GetString(CfgFnUser),
-		Password:    configSource.GetString(CfgFnPasswd),
+		User:     configSource.GetString(CfgFnUser),
+		Password: configSource.GetString(CfgFnPasswd),
 		FnApiUrl: apiUrl,
 		CallUrl:  callUrl,
 	}, nil
