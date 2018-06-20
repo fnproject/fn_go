@@ -2,6 +2,9 @@ package provider
 
 import (
 	"fmt"
+	"github.com/fnproject/fn_go/client"
+	"github.com/fnproject/fn_go/clientv2"
+	"github.com/fnproject/fn_go/client/version"
 	"net/http"
 	"net/url"
 	"strings"
@@ -35,7 +38,8 @@ type Provider interface {
 	// WrapCallTransport adds any request signing or auth to an existing round tripper for calls
 	WrapCallTransport(http.RoundTripper) http.RoundTripper
 	APIClient() *client.Fn
-	VersionClient() *version.Client
+	APIClientv2() *clientv2.Fn
+    VersionClient() *version.Client
 }
 
 // CanonicalFnAPIUrl canonicalises an *FN_API_URL  to a default value
