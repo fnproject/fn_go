@@ -142,8 +142,7 @@ func (op *Provider) CallURL(appName string) *url.URL {
 
 func getMockJsonFile() string {
 	var data []byte
-	wd, _ := os.Getwd()
-	data, err := ioutil.ReadFile(wd + "~/.fn/api-data.json")
+	data, err := ioutil.ReadFile("~/.fn/api-data.json")
 	if err != nil {
 		fmt.Println("Err: ", err)
 	}
