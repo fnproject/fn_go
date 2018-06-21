@@ -103,13 +103,7 @@ func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider
 	}, nil
 }
 
-func (op *Provider) CallURL(appName string) *url.URL {
-
-	// mock
-	shortCode := getMockJsonFile()
-	op.FnCallUrl.Host = shortCode + "." + op.FnCallUrl.Host
-
-	// real
+func (op *Provider) CallURL(appName string) (*url.URL, error) {
 	appClient := *op.APIClient()
 	params := &apiapps.GetAppsAppParams{
 		Context: context.Background(),
@@ -120,29 +114,29 @@ func (op *Provider) CallURL(appName string) *url.URL {
 	if err != nil {
 		switch e := err.(type) {
 		case *apiapps.GetAppsAppNotFound:
-			fmt.Errorf("%v", e.Payload.Error.Message)
+			return nil, fmt.Errorf("%v", e.Payload.Error.Message)
 		default:
-			fmt.Println("Error: ", err)
+			return nil, err
 		}
 	}
+
 	data, err := json.Marshal(resp.Payload.App.Annotations)
 	if err != nil {
-		fmt.Println("Error: ", err)
+		return nil, err
 	}
 	var annons Annotations
 	err = json.Unmarshal(data, &annons)
 	if err != nil {
-		fmt.Println("err: ", err)
+		return nil, err
 	}
+	op.FnCallUrl.Host = annons.ShortCode + "." + op.FnCallUrl.Host
 
-	fmt.Println("shortCode: ", annons.ShortCode)
-
-	return op.FnCallUrl
+	return op.FnCallUrl, err
 }
 
 func getMockJsonFile() string {
 	var data []byte
-	data, err := ioutil.ReadFile("~/.fn/api-data.json")
+	data, err := ioutil.ReadFile("~/.fn/api-mock.json")
 	if err != nil {
 		fmt.Println("Err: ", err)
 	}

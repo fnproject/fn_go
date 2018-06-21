@@ -31,7 +31,7 @@ type Provider interface {
 	// APIURL returns the current API URL base to use with this provider
 	APIURL() *url.URL
 	// CallURL returns the default Call URL base to use with this provider
-	CallURL(string) *url.URL
+	CallURL(string) (*url.URL, error)
 	// WrapCallTransport adds any request signing or auth to an existing round tripper for calls
 	WrapCallTransport(http.RoundTripper) http.RoundTripper
 	APIClient() *client.Fn
