@@ -25,14 +25,23 @@ type App struct {
 
 	// Time when app was created. Always in UTC.
 	// Read Only: true
+	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
+
+	// App ID
+	// Read Only: true
+	ID string `json:"id,omitempty"`
 
 	// Name of this app. Must be different than the image name. Can ony contain alphanumeric, -, and _.
 	// Read Only: true
 	Name string `json:"name,omitempty"`
 
+	// A comma separated list of syslog urls to send all function logs to. supports tls, udp or tcp. e.g. tls://logs.papertrailapp.com:1
+	SyslogURL string `json:"syslog_url,omitempty"`
+
 	// Most recent time that app was updated. Always in UTC.
 	// Read Only: true
+	// Format: date-time
 	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`
 }
 
@@ -41,12 +50,10 @@ func (m *App) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCreatedAt(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateUpdatedAt(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 

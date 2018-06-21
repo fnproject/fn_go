@@ -27,7 +27,6 @@ func (m *LogWrapper) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateLog(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
@@ -44,14 +43,12 @@ func (m *LogWrapper) validateLog(formats strfmt.Registry) error {
 	}
 
 	if m.Log != nil {
-
 		if err := m.Log.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("log")
 			}
 			return err
 		}
-
 	}
 
 	return nil

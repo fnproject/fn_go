@@ -19,16 +19,18 @@ import (
 // swagger:model Call
 type Call struct {
 
-	// App name that is assigned to a route that is being executed.
+	// App ID that is assigned to a route that is being executed.
 	// Read Only: true
-	AppName string `json:"app_name,omitempty"`
+	AppID string `json:"app_id,omitempty"`
 
 	// Time when call completed, whether it was successul or failed. Always in UTC.
 	// Read Only: true
+	// Format: date-time
 	CompletedAt strfmt.DateTime `json:"completed_at,omitempty"`
 
 	// Time when call was submitted. Always in UTC.
 	// Read Only: true
+	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
 	// Call execution error, if status is 'error'.
@@ -45,6 +47,7 @@ type Call struct {
 
 	// Time when call started execution. Always in UTC.
 	// Read Only: true
+	// Format: date-time
 	StartedAt strfmt.DateTime `json:"started_at,omitempty"`
 
 	// A histogram of stats for a call, each is a snapshot of a calls state at the timestamp.
@@ -61,22 +64,18 @@ func (m *Call) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCompletedAt(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateCreatedAt(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateStartedAt(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateStats(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
@@ -132,20 +131,17 @@ func (m *Call) validateStats(formats strfmt.Registry) error {
 	}
 
 	for i := 0; i < len(m.Stats); i++ {
-
 		if swag.IsZero(m.Stats[i]) { // not required
 			continue
 		}
 
 		if m.Stats[i] != nil {
-
 			if err := m.Stats[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("stats" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
-
 		}
 
 	}

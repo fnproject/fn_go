@@ -23,6 +23,8 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/oracle/oci-go-sdk/common"
 	oci "github.com/oracle/oci-go-sdk/common"
+	"net/url"
+	"github.com/fnproject/fn_go/clientv2"
 )
 
 const (
@@ -50,6 +52,12 @@ type Provider struct {
 	DisableCerts bool
 	//CompartmentID is the ocid of the functions compartment ID for a given function
 	CompartmentID string
+}
+
+func (op *Provider) APIClientv2() *clientv2.Fn {
+	runtime := openapi.New(op.FnApiUrl.Host, clientv2.DefaultBasePath, []string{op.FnApiUrl.Scheme})
+	runtime.Transport = op.WrapCallTransport(runtime.Transport)
+	return clientv2.New(runtime, strfmt.Default)
 }
 
 type Response struct {

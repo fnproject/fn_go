@@ -78,6 +78,11 @@ type ListTriggersParams struct {
 
 	*/
 	FnID *string
+	/*Name
+	  Trigger name to filter by
+
+	*/
+	Name *string
 	/*PerPage
 	  Number of results to return, defaults to 30. Max of 100.
 
@@ -155,6 +160,17 @@ func (o *ListTriggersParams) SetFnID(fnID *string) {
 	o.FnID = fnID
 }
 
+// WithName adds the name to the list triggers params
+func (o *ListTriggersParams) WithName(name *string) *ListTriggersParams {
+	o.SetName(name)
+	return o
+}
+
+// SetName adds the name to the list triggers params
+func (o *ListTriggersParams) SetName(name *string) {
+	o.Name = name
+}
+
 // WithPerPage adds the perPage to the list triggers params
 func (o *ListTriggersParams) WithPerPage(perPage *int64) *ListTriggersParams {
 	o.SetPerPage(perPage)
@@ -216,6 +232,22 @@ func (o *ListTriggersParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		qFnID := qrFnID
 		if qFnID != "" {
 			if err := r.SetQueryParam("fn_id", qFnID); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Name != nil {
+
+		// query param name
+		var qrName string
+		if o.Name != nil {
+			qrName = *o.Name
+		}
+		qName := qrName
+		if qName != "" {
+			if err := r.SetQueryParam("name", qName); err != nil {
 				return err
 			}
 		}

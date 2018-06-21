@@ -22,6 +22,9 @@ type Route struct {
 	// Route annotations - this is a map of annotations attached to this route, keys must not exceed 128 bytes and must consist of non-whitespace printable ascii characters, and the seralized representation of individual values must not exeed 512 bytes
 	Annotations map[string]interface{} `json:"annotations,omitempty"`
 
+	// App ID
+	AppID string `json:"app_id,omitempty"`
+
 	// Route configuration - overrides application configuration
 	Config map[string]string `json:"config,omitempty"`
 
@@ -30,9 +33,11 @@ type Route struct {
 
 	// Time when route was created. Always in UTC.
 	// Read Only: true
+	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
 	// Payload format sent into function.
+	// Enum: [default http json]
 	Format string `json:"format,omitempty"`
 
 	// Map of http headers that will be sent with the response
@@ -55,10 +60,12 @@ type Route struct {
 	Timeout *int32 `json:"timeout,omitempty"`
 
 	// Route type
+	// Enum: [sync async]
 	Type string `json:"type,omitempty"`
 
 	// Most recent time that route was updated. Always in UTC.
 	// Read Only: true
+	// Format: date-time
 	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`
 }
 
@@ -67,27 +74,18 @@ func (m *Route) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCreatedAt(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateFormat(formats); err != nil {
-		// prop
-		res = append(res, err)
-	}
-
-	if err := m.validateHeaders(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateType(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateUpdatedAt(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
@@ -151,15 +149,6 @@ func (m *Route) validateFormat(formats strfmt.Registry) error {
 	// value enum
 	if err := m.validateFormatEnum("format", "body", m.Format); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (m *Route) validateHeaders(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Headers) { // not required
-		return nil
 	}
 
 	return nil

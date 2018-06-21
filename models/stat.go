@@ -21,6 +21,7 @@ type Stat struct {
 	Metrics *StatMetrics `json:"metrics,omitempty"`
 
 	// timestamp
+	// Format: date-time
 	Timestamp strfmt.DateTime `json:"timestamp,omitempty"`
 }
 
@@ -29,12 +30,10 @@ func (m *Stat) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateMetrics(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateTimestamp(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
@@ -51,14 +50,12 @@ func (m *Stat) validateMetrics(formats strfmt.Registry) error {
 	}
 
 	if m.Metrics != nil {
-
 		if err := m.Metrics.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("metrics")
 			}
 			return err
 		}
-
 	}
 
 	return nil

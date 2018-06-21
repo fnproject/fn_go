@@ -23,8 +23,9 @@ type AppList struct {
 	// Required: true
 	Items []*App `json:"items"`
 
-	// next
-	Next NextCursor `json:"next,omitempty"`
+	// cursor to send with subsequent request to receive the next page, if non-empty
+	// Read Only: true
+	NextCursor string `json:"next_cursor,omitempty"`
 }
 
 // Validate validates this app list
@@ -32,10 +33,6 @@ func (m *AppList) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateItems(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateNext(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -65,22 +62,6 @@ func (m *AppList) validateItems(formats strfmt.Registry) error {
 			}
 		}
 
-	}
-
-	return nil
-}
-
-func (m *AppList) validateNext(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Next) { // not required
-		return nil
-	}
-
-	if err := m.Next.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("next")
-		}
-		return err
 	}
 
 	return nil

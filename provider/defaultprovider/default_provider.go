@@ -11,6 +11,9 @@ import (
 	"github.com/fnproject/fn_go/client/version"
 	"github.com/fnproject/fn_go/provider"
 	"github.com/go-openapi/strfmt"
+	"net/http"
+	"net/url"
+	"github.com/fnproject/fn_go/clientv2"
 )
 
 // Provider is the default Auth provider
@@ -22,6 +25,14 @@ type Provider struct {
 	// URL to use for FN call interactions
 	CallUrl *url.URL
 }
+
+func (dp *Provider) APIClientv2() *clientv2.Fn {
+	transport := openapi.New(dp.FnApiUrl.Host, clientv2.DefaultBasePath, []string{dp.FnApiUrl.Scheme})
+	if dp.Token != "" {
+		transport.DefaultAuthentication = openapi.BearerToken(dp.Token)
+	}
+
+	return clientv2.New(transport, strfmt.Default)}
 
 //  NewFromConfig creates a default provider  that does un-authenticated calls to
 func NewFromConfig(configSource provider.ConfigSource, _ provider.PassPhraseSource) (provider.Provider, error) {

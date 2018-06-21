@@ -36,12 +36,10 @@ func (m *AppsWrapper) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateApps(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateError(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
@@ -58,20 +56,17 @@ func (m *AppsWrapper) validateApps(formats strfmt.Registry) error {
 	}
 
 	for i := 0; i < len(m.Apps); i++ {
-
 		if swag.IsZero(m.Apps[i]) { // not required
 			continue
 		}
 
 		if m.Apps[i] != nil {
-
 			if err := m.Apps[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("apps" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
-
 		}
 
 	}
@@ -86,14 +81,12 @@ func (m *AppsWrapper) validateError(formats strfmt.Registry) error {
 	}
 
 	if m.Error != nil {
-
 		if err := m.Error.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("error")
 			}
 			return err
 		}
-
 	}
 
 	return nil

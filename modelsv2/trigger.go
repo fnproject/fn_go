@@ -22,16 +22,18 @@ type Trigger struct {
 	// Trigger annotations - this is a map of annotations attached to this trigger, keys must not exceed 128 bytes and must consist of non-whitespace printable ascii characters, and the seralized representation of individual values must not exeed 512 bytes
 	Annotations map[string]interface{} `json:"annotations,omitempty"`
 
-	// app id
-	AppID AppID `json:"app_id,omitempty"`
+	// opaque, unique application identifier
+	// Read Only: true
+	AppID string `json:"app_id,omitempty"`
 
 	// Time when trigger was created. Always in UTC.
 	// Read Only: true
 	// Format: date-time
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
-	// fn id
-	FnID FnID `json:"fn_id,omitempty"`
+	// opaque, unique function identifier
+	// Read Only: true
+	FnID string `json:"fn_id,omitempty"`
 
 	// Unique trigger identifier
 	// Read Only: true
@@ -57,15 +59,7 @@ type Trigger struct {
 func (m *Trigger) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAppID(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateCreatedAt(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateFnID(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -83,22 +77,6 @@ func (m *Trigger) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Trigger) validateAppID(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.AppID) { // not required
-		return nil
-	}
-
-	if err := m.AppID.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("app_id")
-		}
-		return err
-	}
-
-	return nil
-}
-
 func (m *Trigger) validateCreatedAt(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.CreatedAt) { // not required
@@ -106,22 +84,6 @@ func (m *Trigger) validateCreatedAt(formats strfmt.Registry) error {
 	}
 
 	if err := validate.FormatOf("created_at", "body", "date-time", m.CreatedAt.String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Trigger) validateFnID(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.FnID) { // not required
-		return nil
-	}
-
-	if err := m.FnID.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("fn_id")
-		}
 		return err
 	}
 

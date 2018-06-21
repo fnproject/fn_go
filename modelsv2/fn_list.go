@@ -23,8 +23,9 @@ type FnList struct {
 	// Required: true
 	Items []*Fn `json:"items"`
 
-	// next cursor
-	NextCursor NextCursor `json:"next_cursor,omitempty"`
+	// cursor to send with subsequent request to receive the next page, if non-empty
+	// Read Only: true
+	NextCursor string `json:"next_cursor,omitempty"`
 }
 
 // Validate validates this fn list
@@ -32,10 +33,6 @@ func (m *FnList) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateItems(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateNextCursor(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -65,22 +62,6 @@ func (m *FnList) validateItems(formats strfmt.Registry) error {
 			}
 		}
 
-	}
-
-	return nil
-}
-
-func (m *FnList) validateNextCursor(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.NextCursor) { // not required
-		return nil
-	}
-
-	if err := m.NextCursor.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("next_cursor")
-		}
-		return err
 	}
 
 	return nil
