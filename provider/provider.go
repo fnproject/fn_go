@@ -63,9 +63,9 @@ func CanonicalFnAPIUrl(urlStr string) (*url.URL, error) {
 		}
 	}
 
-	//maintain backwards compatibility with first version FN_API_URL env vars
-	if parseUrl.Path == "" || parseUrl.Path == "/" {
-		parseUrl.Path = "/v1"
+	//Remove /v1 from any paths here internal URL is now base URL
+	if strings.HasSuffix(parseUrl.Path,"/v1" ) {
+		parseUrl.Path = strings.TrimSuffix(parseUrl.Path,"v1")
 	}
 
 	return parseUrl, nil

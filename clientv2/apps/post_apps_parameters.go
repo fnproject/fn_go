@@ -64,11 +64,11 @@ for the post apps operation typically these are written to a http.Request
 */
 type PostAppsParams struct {
 
-	/*AppBody
+	/*Body
 	  App to modify.
 
 	*/
-	AppBody *modelsv2.App
+	Body *modelsv2.App
 
 	timeout    time.Duration
 	Context    context.Context
@@ -108,15 +108,15 @@ func (o *PostAppsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithAppBody adds the appBody to the post apps params
-func (o *PostAppsParams) WithAppBody(appBody *modelsv2.App) *PostAppsParams {
-	o.SetAppBody(appBody)
+// WithBody adds the body to the post apps params
+func (o *PostAppsParams) WithBody(body *modelsv2.App) *PostAppsParams {
+	o.SetBody(body)
 	return o
 }
 
-// SetAppBody adds the appBody to the post apps params
-func (o *PostAppsParams) SetAppBody(appBody *modelsv2.App) {
-	o.AppBody = appBody
+// SetBody adds the body to the post apps params
+func (o *PostAppsParams) SetBody(body *modelsv2.App) {
+	o.Body = body
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -127,8 +127,8 @@ func (o *PostAppsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regi
 	}
 	var res []error
 
-	if o.AppBody != nil {
-		if err := r.SetBodyParam(o.AppBody); err != nil {
+	if o.Body != nil {
+		if err := r.SetBodyParam(o.Body); err != nil {
 			return err
 		}
 	}

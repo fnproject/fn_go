@@ -6,8 +6,6 @@ package modelsv2
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"encoding/json"
-
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
@@ -45,8 +43,7 @@ type Trigger struct {
 	// uri path for this trigger. e.g. `sayHello`, `say/hello`
 	Source string `json:"source,omitempty"`
 
-	// class of trigger, e.g. schedule, http
-	// Enum: [http stream]
+	// class of trigger, e.g. schedule, http, queue
 	Type string `json:"type,omitempty"`
 
 	// Most recent time that trigger was updated. Always in UTC.
@@ -60,10 +57,6 @@ func (m *Trigger) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCreatedAt(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateType(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -84,49 +77,6 @@ func (m *Trigger) validateCreatedAt(formats strfmt.Registry) error {
 	}
 
 	if err := validate.FormatOf("created_at", "body", "date-time", m.CreatedAt.String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-var triggerTypeTypePropEnum []interface{}
-
-func init() {
-	var res []string
-	if err := json.Unmarshal([]byte(`["http","stream"]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		triggerTypeTypePropEnum = append(triggerTypeTypePropEnum, v)
-	}
-}
-
-const (
-
-	// TriggerTypeHTTP captures enum value "http"
-	TriggerTypeHTTP string = "http"
-
-	// TriggerTypeStream captures enum value "stream"
-	TriggerTypeStream string = "stream"
-)
-
-// prop value enum
-func (m *Trigger) validateTypeEnum(path, location string, value string) error {
-	if err := validate.Enum(path, location, value, triggerTypeTypePropEnum); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (m *Trigger) validateType(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Type) { // not required
-		return nil
-	}
-
-	// value enum
-	if err := m.validateTypeEnum("type", "body", m.Type); err != nil {
 		return err
 	}
 

@@ -32,6 +32,13 @@ func (o *PutAppsAppIDReader) ReadResponse(response runtime.ClientResponse, consu
 		}
 		return result, nil
 
+	case 400:
+		result := NewPutAppsAppIDBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	case 404:
 		result := NewPutAppsAppIDNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -71,6 +78,35 @@ func (o *PutAppsAppIDOK) Error() string {
 func (o *PutAppsAppIDOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(modelsv2.App)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewPutAppsAppIDBadRequest creates a PutAppsAppIDBadRequest with default headers values
+func NewPutAppsAppIDBadRequest() *PutAppsAppIDBadRequest {
+	return &PutAppsAppIDBadRequest{}
+}
+
+/*PutAppsAppIDBadRequest handles this case with default header values.
+
+Parameters are missing or invalid.
+*/
+type PutAppsAppIDBadRequest struct {
+	Payload *modelsv2.Error
+}
+
+func (o *PutAppsAppIDBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /apps/{appID}][%d] putAppsAppIdBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *PutAppsAppIDBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

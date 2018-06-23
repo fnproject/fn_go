@@ -14,6 +14,8 @@ import (
 	"net/http"
 	"net/url"
 	"github.com/fnproject/fn_go/clientv2"
+	"path"
+	"log"
 )
 
 // Provider is the default Auth provider
@@ -27,7 +29,8 @@ type Provider struct {
 }
 
 func (dp *Provider) APIClientv2() *clientv2.Fn {
-	transport := openapi.New(dp.FnApiUrl.Host, clientv2.DefaultBasePath, []string{dp.FnApiUrl.Scheme})
+	transport := openapi.New(dp.FnApiUrl.Host, path.Join(dp.FnApiUrl.Path ,clientv2.DefaultBasePath), []string{dp.FnApiUrl.Scheme})
+	log.Printf("path %s",path.Join(dp.FnApiUrl.Path ,clientv2.DefaultBasePath))
 	if dp.Token != "" {
 		transport.DefaultAuthentication = openapi.BearerToken(dp.Token)
 	}
@@ -38,6 +41,8 @@ func (dp *Provider) APIClientv2() *clientv2.Fn {
 func NewFromConfig(configSource provider.ConfigSource, _ provider.PassPhraseSource) (provider.Provider, error) {
 
 	apiUrl, err := provider.CanonicalFnAPIUrl(configSource.GetString(provider.CfgFnAPIURL))
+	log.Printf("URL: %s",apiUrl)
+	
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +78,9 @@ func (dp *Provider) APIURL() *url.URL {
 }
 
 func (dp *Provider) APIClient() *client.Fn {
-	transport := openapi.New(dp.FnApiUrl.Host, dp.FnApiUrl.Path, []string{dp.FnApiUrl.Scheme})
+	join := path.Join(dp.FnApiUrl.Path, client.DefaultBasePath)
+	log.Printf("path %s",join)
+	transport := openapi.New(dp.FnApiUrl.Host, join, []string{dp.FnApiUrl.Scheme})
 	if dp.Token != "" {
 		transport.DefaultAuthentication = openapi.BearerToken(dp.Token)
 	}

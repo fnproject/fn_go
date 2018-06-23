@@ -32,6 +32,13 @@ func (o *UpdateFnReader) ReadResponse(response runtime.ClientResponse, consumer 
 		}
 		return result, nil
 
+	case 400:
+		result := NewUpdateFnBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		result := NewUpdateFnDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -64,6 +71,35 @@ func (o *UpdateFnOK) Error() string {
 func (o *UpdateFnOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(modelsv2.Fn)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewUpdateFnBadRequest creates a UpdateFnBadRequest with default headers values
+func NewUpdateFnBadRequest() *UpdateFnBadRequest {
+	return &UpdateFnBadRequest{}
+}
+
+/*UpdateFnBadRequest handles this case with default header values.
+
+Parameters are missing or invalid.
+*/
+type UpdateFnBadRequest struct {
+	Payload *modelsv2.Error
+}
+
+func (o *UpdateFnBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /fns/{fnID}][%d] updateFnBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *UpdateFnBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

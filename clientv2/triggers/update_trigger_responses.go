@@ -32,6 +32,13 @@ func (o *UpdateTriggerReader) ReadResponse(response runtime.ClientResponse, cons
 		}
 		return result, nil
 
+	case 400:
+		result := NewUpdateTriggerBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		result := NewUpdateTriggerDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -64,6 +71,35 @@ func (o *UpdateTriggerOK) Error() string {
 func (o *UpdateTriggerOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(modelsv2.Trigger)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewUpdateTriggerBadRequest creates a UpdateTriggerBadRequest with default headers values
+func NewUpdateTriggerBadRequest() *UpdateTriggerBadRequest {
+	return &UpdateTriggerBadRequest{}
+}
+
+/*UpdateTriggerBadRequest handles this case with default header values.
+
+Parameters are missing or invalid.
+*/
+type UpdateTriggerBadRequest struct {
+	Payload *modelsv2.Error
+}
+
+func (o *UpdateTriggerBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /triggers/{triggerID}][%d] updateTriggerBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *UpdateTriggerBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
