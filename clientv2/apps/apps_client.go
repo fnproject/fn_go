@@ -25,152 +25,152 @@ type Client struct {
 }
 
 /*
-DeleteAppsAppID deletes an app
-
-Delete an app.
-*/
-func (a *Client) DeleteAppsAppID(params *DeleteAppsAppIDParams) (*DeleteAppsAppIDOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteAppsAppIDParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DeleteAppsAppID",
-		Method:             "DELETE",
-		PathPattern:        "/apps/{appID}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &DeleteAppsAppIDReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*DeleteAppsAppIDOK), nil
-
-}
-
-/*
-GetApps gets applications
-
-Get a filtered applications returned in alphabetical order.
-*/
-func (a *Client) GetApps(params *GetAppsParams) (*GetAppsOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetAppsParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetApps",
-		Method:             "GET",
-		PathPattern:        "/apps",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &GetAppsReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*GetAppsOK), nil
-
-}
-
-/*
-GetAppsAppID gets information for a app
-
-This gives more details about a app, such as statistics.
-*/
-func (a *Client) GetAppsAppID(params *GetAppsAppIDParams) (*GetAppsAppIDOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetAppsAppIDParams()
-	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetAppsAppID",
-		Method:             "GET",
-		PathPattern:        "/apps/{appID}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &GetAppsAppIDReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*GetAppsAppIDOK), nil
-
-}
-
-/*
-PostApps posts new app
+CreateApp posts new app
 
 Insert a new app
 */
-func (a *Client) PostApps(params *PostAppsParams) (*PostAppsOK, error) {
+func (a *Client) CreateApp(params *CreateAppParams) (*CreateAppOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPostAppsParams()
+		params = NewCreateAppParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PostApps",
+		ID:                 "CreateApp",
 		Method:             "POST",
 		PathPattern:        "/apps",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PostAppsReader{formats: a.formats},
+		Reader:             &CreateAppReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return result.(*PostAppsOK), nil
+	return result.(*CreateAppOK), nil
 
 }
 
 /*
-PutAppsAppID updates an app
+DeleteApp deletes an app
 
-Updates and application.
+Delete an app.
 */
-func (a *Client) PutAppsAppID(params *PutAppsAppIDParams) (*PutAppsAppIDOK, error) {
+func (a *Client) DeleteApp(params *DeleteAppParams) (*DeleteAppOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewPutAppsAppIDParams()
+		params = NewDeleteAppParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "PutAppsAppID",
+		ID:                 "DeleteApp",
+		Method:             "DELETE",
+		PathPattern:        "/apps/{appID}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &DeleteAppReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DeleteAppOK), nil
+
+}
+
+/*
+GetApp gets information for a app
+
+This gives more details about a app, such as statistics.
+*/
+func (a *Client) GetApp(params *GetAppParams) (*GetAppOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetAppParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "GetApp",
+		Method:             "GET",
+		PathPattern:        "/apps/{appID}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetAppReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*GetAppOK), nil
+
+}
+
+/*
+ListApps gets applications
+
+Get a filtered applications returned in alphabetical order.
+*/
+func (a *Client) ListApps(params *ListAppsParams) (*ListAppsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListAppsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ListApps",
+		Method:             "GET",
+		PathPattern:        "/apps",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &ListAppsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*ListAppsOK), nil
+
+}
+
+/*
+UpdateApp updates an app
+
+Updates and application.
+*/
+func (a *Client) UpdateApp(params *UpdateAppParams) (*UpdateAppOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateAppParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "UpdateApp",
 		Method:             "PUT",
 		PathPattern:        "/apps/{appID}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &PutAppsAppIDReader{formats: a.formats},
+		Reader:             &UpdateAppReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return result.(*PutAppsAppIDOK), nil
+	return result.(*UpdateAppOK), nil
 
 }
 
