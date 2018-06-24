@@ -32,6 +32,20 @@ func (o *CreateFnReader) ReadResponse(response runtime.ClientResponse, consumer 
 		}
 		return result, nil
 
+	case 400:
+		result := NewCreateFnBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
+	case 409:
+		result := NewCreateFnConflict()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		result := NewCreateFnDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -64,6 +78,64 @@ func (o *CreateFnOK) Error() string {
 func (o *CreateFnOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(modelsv2.Fn)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewCreateFnBadRequest creates a CreateFnBadRequest with default headers values
+func NewCreateFnBadRequest() *CreateFnBadRequest {
+	return &CreateFnBadRequest{}
+}
+
+/*CreateFnBadRequest handles this case with default header values.
+
+Invalid Fn
+*/
+type CreateFnBadRequest struct {
+	Payload *modelsv2.Error
+}
+
+func (o *CreateFnBadRequest) Error() string {
+	return fmt.Sprintf("[POST /fns][%d] createFnBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *CreateFnBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewCreateFnConflict creates a CreateFnConflict with default headers values
+func NewCreateFnConflict() *CreateFnConflict {
+	return &CreateFnConflict{}
+}
+
+/*CreateFnConflict handles this case with default header values.
+
+Fn with name already exists.
+*/
+type CreateFnConflict struct {
+	Payload *modelsv2.Error
+}
+
+func (o *CreateFnConflict) Error() string {
+	return fmt.Sprintf("[POST /fns][%d] createFnConflict  %+v", 409, o.Payload)
+}
+
+func (o *CreateFnConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

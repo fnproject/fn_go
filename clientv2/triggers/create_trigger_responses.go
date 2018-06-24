@@ -32,6 +32,20 @@ func (o *CreateTriggerReader) ReadResponse(response runtime.ClientResponse, cons
 		}
 		return result, nil
 
+	case 400:
+		result := NewCreateTriggerBadRequest()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
+	case 409:
+		result := NewCreateTriggerConflict()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		result := NewCreateTriggerDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -64,6 +78,64 @@ func (o *CreateTriggerOK) Error() string {
 func (o *CreateTriggerOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(modelsv2.Trigger)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewCreateTriggerBadRequest creates a CreateTriggerBadRequest with default headers values
+func NewCreateTriggerBadRequest() *CreateTriggerBadRequest {
+	return &CreateTriggerBadRequest{}
+}
+
+/*CreateTriggerBadRequest handles this case with default header values.
+
+Invalid Trigger
+*/
+type CreateTriggerBadRequest struct {
+	Payload *modelsv2.Error
+}
+
+func (o *CreateTriggerBadRequest) Error() string {
+	return fmt.Sprintf("[POST /triggers][%d] createTriggerBadRequest  %+v", 400, o.Payload)
+}
+
+func (o *CreateTriggerBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewCreateTriggerConflict creates a CreateTriggerConflict with default headers values
+func NewCreateTriggerConflict() *CreateTriggerConflict {
+	return &CreateTriggerConflict{}
+}
+
+/*CreateTriggerConflict handles this case with default header values.
+
+Trigger with name already exists.
+*/
+type CreateTriggerConflict struct {
+	Payload *modelsv2.Error
+}
+
+func (o *CreateTriggerConflict) Error() string {
+	return fmt.Sprintf("[POST /triggers][%d] createTriggerConflict  %+v", 409, o.Payload)
+}
+
+func (o *CreateTriggerConflict) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

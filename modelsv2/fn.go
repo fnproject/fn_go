@@ -28,9 +28,6 @@ type Fn struct {
 	// Func configuration key values
 	Config map[string]string `json:"config,omitempty"`
 
-	// Max usable CPU cores for this trigger. Value in MilliCPUs (eg. 500m) or as floating-point (eg. 0.5)
-	CPU string `json:"cpu,omitempty"`
-
 	// Time when function was created. Always in UTC RFC3339.
 	// Read Only: true
 	// Format: date-time
