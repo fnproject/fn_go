@@ -54,8 +54,8 @@ func (dp *Provider) WrapCallTransport(t http.RoundTripper) http.RoundTripper {
 	return t
 }
 
-func (dp *Provider) CallURL(appName string) *url.URL {
-	return dp.CallUrl
+func (dp *Provider) CallURL(appName string) (*url.URL, error) {
+	return dp.CallUrl, nil
 }
 func (dp *Provider) APIURL() *url.URL {
 	return dp.FnApiUrl

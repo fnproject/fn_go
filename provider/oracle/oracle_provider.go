@@ -9,11 +9,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"time"
-
-	"net/url"
 
 	fnclient "github.com/fnproject/fn_go/client"
 	apiapps "github.com/fnproject/fn_go/client/apps"
@@ -132,19 +131,6 @@ func (op *Provider) CallURL(appName string) (*url.URL, error) {
 	op.FnCallUrl.Host = annons.ShortCode + "." + op.FnCallUrl.Host
 
 	return op.FnCallUrl, err
-}
-
-func getMockJsonFile() string {
-	var data []byte
-	data, err := ioutil.ReadFile("~/.fn/api-mock.json")
-	if err != nil {
-		fmt.Println("Err: ", err)
-	}
-
-	var resp Response
-	_ = json.Unmarshal(data, &resp)
-
-	return resp.Annotations.ShortCode
 }
 
 func (op *Provider) APIURL() *url.URL {
