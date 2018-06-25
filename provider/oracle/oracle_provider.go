@@ -1,17 +1,21 @@
 package oracle
 
 import (
+	"context"
 	"crypto/rsa"
 	"crypto/tls"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"time"
 
 	fnclient "github.com/fnproject/fn_go/client"
+	apiapps "github.com/fnproject/fn_go/client/apps"
 	"github.com/fnproject/fn_go/client/version"
 	"github.com/fnproject/fn_go/provider"
 	openapi "github.com/go-openapi/runtime/client"
@@ -19,7 +23,6 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/oracle/oci-go-sdk/common"
 	oci "github.com/oracle/oci-go-sdk/common"
-	"net/url"
 )
 
 const (
@@ -47,6 +50,18 @@ type Provider struct {
 	DisableCerts bool
 	//CompartmentID is the ocid of the functions compartment ID for a given function
 	CompartmentID string
+}
+
+type Response struct {
+	Annotations Annotations `json:"annotations"`
+	CreatedAt   string      `json:"created_at"`
+	UpdatedAt   string      `json:"updated_at"`
+	Name        string      `json:"name"`
+}
+
+type Annotations struct {
+	CompartmentID string `json:"oracle.com/oci/compartmentId"`
+	ShortCode     string `json:"oracle.com/oci/appCode"`
 }
 
 func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider.PassPhraseSource) (provider.Provider, error) {
@@ -87,8 +102,35 @@ func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider
 	}, nil
 }
 
-func (op *Provider) CallURL() *url.URL {
-	return op.FnCallUrl
+func (op *Provider) CallURL(appName string) (*url.URL, error) {
+	appClient := *op.APIClient()
+	params := &apiapps.GetAppsAppParams{
+		Context: context.Background(),
+		App:     appName,
+	}
+
+	resp, err := appClient.Apps.GetAppsApp(params)
+	if err != nil {
+		switch e := err.(type) {
+		case *apiapps.GetAppsAppNotFound:
+			return nil, fmt.Errorf("%v", e.Payload.Error.Message)
+		default:
+			return nil, err
+		}
+	}
+
+	data, err := json.Marshal(resp.Payload.App.Annotations)
+	if err != nil {
+		return nil, err
+	}
+	var annons Annotations
+	err = json.Unmarshal(data, &annons)
+	if err != nil {
+		return nil, err
+	}
+	op.FnCallUrl.Host = annons.ShortCode + "." + op.FnCallUrl.Host
+
+	return op.FnCallUrl, err
 }
 
 func (op *Provider) APIURL() *url.URL {
@@ -96,7 +138,6 @@ func (op *Provider) APIURL() *url.URL {
 }
 
 func (op *Provider) WrapCallTransport(roundTripper http.RoundTripper) http.RoundTripper {
-
 	if op.DisableCerts {
 		roundTripper = InsecureRoundTripper(roundTripper)
 	}

@@ -4,12 +4,13 @@ import (
 	openapi "github.com/go-openapi/runtime/client"
 
 	"fmt"
+	"net/http"
+	"net/url"
+
 	"github.com/fnproject/fn_go/client"
 	"github.com/fnproject/fn_go/client/version"
 	"github.com/fnproject/fn_go/provider"
 	"github.com/go-openapi/strfmt"
-	"net/http"
-	"net/url"
 )
 
 // Provider is the default Auth provider
@@ -53,8 +54,8 @@ func (dp *Provider) WrapCallTransport(t http.RoundTripper) http.RoundTripper {
 	return t
 }
 
-func (dp *Provider) CallURL() *url.URL {
-	return dp.CallUrl
+func (dp *Provider) CallURL(appName string) (*url.URL, error) {
+	return dp.CallUrl, nil
 }
 func (dp *Provider) APIURL() *url.URL {
 	return dp.FnApiUrl
