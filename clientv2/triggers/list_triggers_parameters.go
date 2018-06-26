@@ -64,7 +64,7 @@ for the list triggers operation typically these are written to a http.Request
 type ListTriggersParams struct {
 
 	/*AppID
-	  Function ID.
+	  Application ID.
 
 	*/
 	AppID *string
@@ -79,7 +79,7 @@ type ListTriggersParams struct {
 	*/
 	FnID *string
 	/*Name
-	  Trigger name to filter by
+	  A Trigger name to filter by.
 
 	*/
 	Name *string

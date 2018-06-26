@@ -51,7 +51,7 @@ func NewListAppsOK() *ListAppsOK {
 
 /*ListAppsOK handles this case with default header values.
 
-List of apps.
+A list of Applications.
 */
 type ListAppsOK struct {
 	Payload *modelsv2.AppList
@@ -82,7 +82,7 @@ func NewListAppsDefault(code int) *ListAppsDefault {
 
 /*ListAppsDefault handles this case with default header values.
 
-Unexpected error
+An unexpected error occurred.
 */
 type ListAppsDefault struct {
 	_statusCode int

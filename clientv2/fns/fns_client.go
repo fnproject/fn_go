@@ -25,7 +25,7 @@ type Client struct {
 }
 
 /*
-CreateFn creates a fn
+CreateFn creates a new function
 
 Creates a new Function, returning the complete entity.
 */
@@ -55,9 +55,9 @@ func (a *Client) CreateFn(params *CreateFnParams) (*CreateFnOK, error) {
 }
 
 /*
-DeleteFn deletes a fn
+DeleteFn deletes a function
 
-Delete a function.
+Delete the specified Function.
 */
 func (a *Client) DeleteFn(params *DeleteFnParams) (*DeleteFnNoContent, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) DeleteFn(params *DeleteFnParams) (*DeleteFnNoContent, error) {
 }
 
 /*
-GetFn gets definition for a function
+GetFn gets definition of a function
 
-Get definition for a function.
+Gets the definition for the Function with the specified ID.
 */
 func (a *Client) GetFn(params *GetFnParams) (*GetFnOK, error) {
 	// TODO: Validate the params before sending
@@ -115,9 +115,9 @@ func (a *Client) GetFn(params *GetFnParams) (*GetFnOK, error) {
 }
 
 /*
-ListFns gets all fns
+ListFns gets a list of functions within an application
 
-Get a list of all the Functions in alphabetical order.
+Get a filtered list of Functions for an Application, in alphabetical order.
 */
 func (a *Client) ListFns(params *ListFnsParams) (*ListFnsOK, error) {
 	// TODO: Validate the params before sending
@@ -145,9 +145,9 @@ func (a *Client) ListFns(params *ListFnsParams) (*ListFnsOK, error) {
 }
 
 /*
-UpdateFn updates a fn
+UpdateFn updates a function
 
-Updates a Function.
+Updates a Function via merging the provided values.
 */
 func (a *Client) UpdateFn(params *UpdateFnParams) (*UpdateFnOK, error) {
 	// TODO: Validate the params before sending

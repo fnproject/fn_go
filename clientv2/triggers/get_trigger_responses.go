@@ -32,6 +32,13 @@ func (o *GetTriggerReader) ReadResponse(response runtime.ClientResponse, consume
 		}
 		return result, nil
 
+	case 404:
+		result := NewGetTriggerNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		result := NewGetTriggerDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -73,6 +80,35 @@ func (o *GetTriggerOK) readResponse(response runtime.ClientResponse, consumer ru
 	return nil
 }
 
+// NewGetTriggerNotFound creates a GetTriggerNotFound with default headers values
+func NewGetTriggerNotFound() *GetTriggerNotFound {
+	return &GetTriggerNotFound{}
+}
+
+/*GetTriggerNotFound handles this case with default header values.
+
+The Trigger does not exist.
+*/
+type GetTriggerNotFound struct {
+	Payload *modelsv2.Error
+}
+
+func (o *GetTriggerNotFound) Error() string {
+	return fmt.Sprintf("[GET /triggers/{triggerID}][%d] getTriggerNotFound  %+v", 404, o.Payload)
+}
+
+func (o *GetTriggerNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewGetTriggerDefault creates a GetTriggerDefault with default headers values
 func NewGetTriggerDefault(code int) *GetTriggerDefault {
 	return &GetTriggerDefault{
@@ -82,7 +118,7 @@ func NewGetTriggerDefault(code int) *GetTriggerDefault {
 
 /*GetTriggerDefault handles this case with default header values.
 
-Error
+An unexpected error occurred.
 */
 type GetTriggerDefault struct {
 	_statusCode int

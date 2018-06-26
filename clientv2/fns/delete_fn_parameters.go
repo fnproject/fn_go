@@ -63,7 +63,7 @@ for the delete fn operation typically these are written to a http.Request
 type DeleteFnParams struct {
 
 	/*FnID
-	  Function ID.
+	  Opaque, unique Function ID.
 
 	*/
 	FnID string

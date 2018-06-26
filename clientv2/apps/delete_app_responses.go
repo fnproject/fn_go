@@ -58,7 +58,7 @@ func NewDeleteAppOK() *DeleteAppOK {
 
 /*DeleteAppOK handles this case with default header values.
 
-Apps successfully deleted.
+The Application successfully deleted.
 */
 type DeleteAppOK struct {
 }
@@ -79,7 +79,7 @@ func NewDeleteAppNotFound() *DeleteAppNotFound {
 
 /*DeleteAppNotFound handles this case with default header values.
 
-App does not exist.
+Application does not exist.
 */
 type DeleteAppNotFound struct {
 	Payload *modelsv2.Error
@@ -110,7 +110,7 @@ func NewDeleteAppDefault(code int) *DeleteAppDefault {
 
 /*DeleteAppDefault handles this case with default header values.
 
-Unexpected error
+An unexpected error occurred.
 */
 type DeleteAppDefault struct {
 	_statusCode int

@@ -23,7 +23,7 @@ type TriggerList struct {
 	// Required: true
 	Items []*Trigger `json:"items"`
 
-	// cursor to send with subsequent request to receive the next page, if non-empty
+	// Cursor to send with subsequent request to receive the next page, if non-empty.
 	// Read Only: true
 	NextCursor string `json:"next_cursor,omitempty"`
 }

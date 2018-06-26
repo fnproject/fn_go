@@ -64,7 +64,7 @@ for the list fns operation typically these are written to a http.Request
 type ListFnsParams struct {
 
 	/*AppID
-	  Function ID.
+	  Application ID.
 
 	*/
 	AppID *string

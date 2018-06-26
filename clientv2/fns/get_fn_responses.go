@@ -32,6 +32,13 @@ func (o *GetFnReader) ReadResponse(response runtime.ClientResponse, consumer run
 		}
 		return result, nil
 
+	case 404:
+		result := NewGetFnNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		result := NewGetFnDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -64,6 +71,35 @@ func (o *GetFnOK) Error() string {
 func (o *GetFnOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(modelsv2.Fn)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewGetFnNotFound creates a GetFnNotFound with default headers values
+func NewGetFnNotFound() *GetFnNotFound {
+	return &GetFnNotFound{}
+}
+
+/*GetFnNotFound handles this case with default header values.
+
+Function does not exist.
+*/
+type GetFnNotFound struct {
+	Payload *modelsv2.Error
+}
+
+func (o *GetFnNotFound) Error() string {
+	return fmt.Sprintf("[GET /fns/{fnID}][%d] getFnNotFound  %+v", 404, o.Payload)
+}
+
+func (o *GetFnNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

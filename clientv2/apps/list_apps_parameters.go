@@ -69,7 +69,7 @@ type ListAppsParams struct {
 	*/
 	Cursor *string
 	/*Name
-	  Application name to filter by
+	  The Application name to filter by.
 
 	*/
 	Name *string

@@ -39,6 +39,13 @@ func (o *UpdateTriggerReader) ReadResponse(response runtime.ClientResponse, cons
 		}
 		return nil, result
 
+	case 404:
+		result := NewUpdateTriggerNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		result := NewUpdateTriggerDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -58,7 +65,7 @@ func NewUpdateTriggerOK() *UpdateTriggerOK {
 
 /*UpdateTriggerOK handles this case with default header values.
 
-Created Triggers data
+Updated Triggers metadata.
 */
 type UpdateTriggerOK struct {
 	Payload *modelsv2.Trigger
@@ -109,6 +116,35 @@ func (o *UpdateTriggerBadRequest) readResponse(response runtime.ClientResponse, 
 	return nil
 }
 
+// NewUpdateTriggerNotFound creates a UpdateTriggerNotFound with default headers values
+func NewUpdateTriggerNotFound() *UpdateTriggerNotFound {
+	return &UpdateTriggerNotFound{}
+}
+
+/*UpdateTriggerNotFound handles this case with default header values.
+
+The Trigger does not exist.
+*/
+type UpdateTriggerNotFound struct {
+	Payload *modelsv2.Error
+}
+
+func (o *UpdateTriggerNotFound) Error() string {
+	return fmt.Sprintf("[PUT /triggers/{triggerID}][%d] updateTriggerNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UpdateTriggerNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewUpdateTriggerDefault creates a UpdateTriggerDefault with default headers values
 func NewUpdateTriggerDefault(code int) *UpdateTriggerDefault {
 	return &UpdateTriggerDefault{
@@ -118,7 +154,7 @@ func NewUpdateTriggerDefault(code int) *UpdateTriggerDefault {
 
 /*UpdateTriggerDefault handles this case with default header values.
 
-Error
+An unexpected error occurred.
 */
 type UpdateTriggerDefault struct {
 	_statusCode int

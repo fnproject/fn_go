@@ -65,7 +65,7 @@ for the create app operation typically these are written to a http.Request
 type CreateAppParams struct {
 
 	/*Body
-	  App to modify.
+	  Application data to insert.
 
 	*/
 	Body *modelsv2.App

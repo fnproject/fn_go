@@ -65,7 +65,7 @@ func NewCreateFnOK() *CreateFnOK {
 
 /*CreateFnOK handles this case with default header values.
 
-Fn.
+Function details.
 */
 type CreateFnOK struct {
 	Payload *modelsv2.Fn
@@ -94,7 +94,7 @@ func NewCreateFnBadRequest() *CreateFnBadRequest {
 
 /*CreateFnBadRequest handles this case with default header values.
 
-Invalid Fn
+Invalid Function.
 */
 type CreateFnBadRequest struct {
 	Payload *modelsv2.Error
@@ -123,7 +123,7 @@ func NewCreateFnConflict() *CreateFnConflict {
 
 /*CreateFnConflict handles this case with default header values.
 
-Fn with name already exists.
+Function with name already exists.
 */
 type CreateFnConflict struct {
 	Payload *modelsv2.Error
@@ -154,7 +154,7 @@ func NewCreateFnDefault(code int) *CreateFnDefault {
 
 /*CreateFnDefault handles this case with default header values.
 
-Error
+An unexpected error occurred.
 */
 type CreateFnDefault struct {
 	_statusCode int

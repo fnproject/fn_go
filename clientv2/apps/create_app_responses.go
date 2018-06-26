@@ -65,7 +65,7 @@ func NewCreateAppOK() *CreateAppOK {
 
 /*CreateAppOK handles this case with default header values.
 
-App details and stats.
+Application details and stats.
 */
 type CreateAppOK struct {
 	Payload *modelsv2.App
@@ -123,7 +123,7 @@ func NewCreateAppConflict() *CreateAppConflict {
 
 /*CreateAppConflict handles this case with default header values.
 
-App already exists.
+Application with name already exists.
 */
 type CreateAppConflict struct {
 	Payload *modelsv2.Error
@@ -154,7 +154,7 @@ func NewCreateAppDefault(code int) *CreateAppDefault {
 
 /*CreateAppDefault handles this case with default header values.
 
-Unexpected error
+An unexpected error occurred.
 */
 type CreateAppDefault struct {
 	_statusCode int

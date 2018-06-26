@@ -63,7 +63,7 @@ for the get trigger operation typically these are written to a http.Request
 type GetTriggerParams struct {
 
 	/*TriggerID
-	  Trigger ID.
+	  Opaque, unique Trigger ID.
 
 	*/
 	TriggerID string

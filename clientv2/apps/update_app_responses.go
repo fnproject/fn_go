@@ -65,7 +65,7 @@ func NewUpdateAppOK() *UpdateAppOK {
 
 /*UpdateAppOK handles this case with default header values.
 
-App details and stats.
+Application details and stats.
 */
 type UpdateAppOK struct {
 	Payload *modelsv2.App
@@ -123,7 +123,7 @@ func NewUpdateAppNotFound() *UpdateAppNotFound {
 
 /*UpdateAppNotFound handles this case with default header values.
 
-App does not exist.
+The Application does not exist.
 */
 type UpdateAppNotFound struct {
 	Payload *modelsv2.Error
@@ -154,7 +154,7 @@ func NewUpdateAppDefault(code int) *UpdateAppDefault {
 
 /*UpdateAppDefault handles this case with default header values.
 
-Unexpected error
+An unexpected error occurred.
 */
 type UpdateAppDefault struct {
 	_statusCode int

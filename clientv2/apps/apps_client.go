@@ -25,9 +25,9 @@ type Client struct {
 }
 
 /*
-CreateApp posts new app
+CreateApp creates a new application
 
-Insert a new app
+Creates a new Application, returning the complete entity.
 */
 func (a *Client) CreateApp(params *CreateAppParams) (*CreateAppOK, error) {
 	// TODO: Validate the params before sending
@@ -55,9 +55,9 @@ func (a *Client) CreateApp(params *CreateAppParams) (*CreateAppOK, error) {
 }
 
 /*
-DeleteApp deletes an app
+DeleteApp deletes an application
 
-Delete an app.
+Delete the specified Application.
 */
 func (a *Client) DeleteApp(params *DeleteAppParams) (*DeleteAppOK, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) DeleteApp(params *DeleteAppParams) (*DeleteAppOK, error) {
 }
 
 /*
-GetApp gets information for a app
+GetApp gets information for an application
 
-This gives more details about a app, such as statistics.
+Returns more details about an Application, such as statistics.
 */
 func (a *Client) GetApp(params *GetAppParams) (*GetAppOK, error) {
 	// TODO: Validate the params before sending
@@ -115,9 +115,9 @@ func (a *Client) GetApp(params *GetAppParams) (*GetAppOK, error) {
 }
 
 /*
-ListApps gets applications
+ListApps gets a list of applications
 
-Get a filtered applications returned in alphabetical order.
+Get a filtered list of Applications in alphabetical order.
 */
 func (a *Client) ListApps(params *ListAppsParams) (*ListAppsOK, error) {
 	// TODO: Validate the params before sending
@@ -145,9 +145,9 @@ func (a *Client) ListApps(params *ListAppsParams) (*ListAppsOK, error) {
 }
 
 /*
-UpdateApp updates an app
+UpdateApp updates an application
 
-Updates and application.
+Updates an Application via merging the provided values.
 */
 func (a *Client) UpdateApp(params *UpdateAppParams) (*UpdateAppOK, error) {
 	// TODO: Validate the params before sending

@@ -25,9 +25,9 @@ type Client struct {
 }
 
 /*
-CreateTrigger creates a trigger
+CreateTrigger creates a new trigger
 
-Creates a Trigger.
+Creates a new Trigger, returning the complete entity.
 */
 func (a *Client) CreateTrigger(params *CreateTriggerParams) (*CreateTriggerOK, error) {
 	// TODO: Validate the params before sending
@@ -55,9 +55,9 @@ func (a *Client) CreateTrigger(params *CreateTriggerParams) (*CreateTriggerOK, e
 }
 
 /*
-DeleteTrigger deletes the trigger
+DeleteTrigger deletes a trigger
 
-Deletes the Trigger.
+Delete the specified Trigger.
 */
 func (a *Client) DeleteTrigger(params *DeleteTriggerParams) (*DeleteTriggerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -85,9 +85,9 @@ func (a *Client) DeleteTrigger(params *DeleteTriggerParams) (*DeleteTriggerNoCon
 }
 
 /*
-GetTrigger gets trigger by name
+GetTrigger gets definition of a trigger
 
-Gets a Trigger by Name.
+Gets the definition for the Trigger with the specified ID.
 */
 func (a *Client) GetTrigger(params *GetTriggerParams) (*GetTriggerOK, error) {
 	// TODO: Validate the params before sending
@@ -115,9 +115,9 @@ func (a *Client) GetTrigger(params *GetTriggerParams) (*GetTriggerOK, error) {
 }
 
 /*
-ListTriggers lists triggers associated with app
+ListTriggers gets a list of triggers within an application or function
 
-This will list all Triggers for a particular Application, returned in name alphabetical order.
+This will list all Triggers for a particular Application or Function, returned in name alphabetical order.
 */
 func (a *Client) ListTriggers(params *ListTriggersParams) (*ListTriggersOK, error) {
 	// TODO: Validate the params before sending
@@ -147,7 +147,7 @@ func (a *Client) ListTriggers(params *ListTriggersParams) (*ListTriggersOK, erro
 /*
 UpdateTrigger updates a trigger
 
-Updates a Trigger.
+Updates a Trigger by merging the provided values.
 */
 func (a *Client) UpdateTrigger(params *UpdateTriggerParams) (*UpdateTriggerOK, error) {
 	// TODO: Validate the params before sending

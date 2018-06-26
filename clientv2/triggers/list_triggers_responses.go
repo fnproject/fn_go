@@ -51,7 +51,7 @@ func NewListTriggersOK() *ListTriggersOK {
 
 /*ListTriggersOK handles this case with default header values.
 
-Trigger data
+List of Triggers
 */
 type ListTriggersOK struct {
 	Payload *modelsv2.TriggerList
@@ -82,7 +82,7 @@ func NewListTriggersDefault(code int) *ListTriggersDefault {
 
 /*ListTriggersDefault handles this case with default header values.
 
-Error
+An unexpected error occurred.
 */
 type ListTriggersDefault struct {
 	_statusCode int

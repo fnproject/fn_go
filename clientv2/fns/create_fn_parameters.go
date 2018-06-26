@@ -65,7 +65,7 @@ for the create fn operation typically these are written to a http.Request
 type CreateFnParams struct {
 
 	/*Body
-	  Fn to upsert
+	  Function data to insert.
 
 	*/
 	Body *modelsv2.Fn

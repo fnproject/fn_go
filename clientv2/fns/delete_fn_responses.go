@@ -32,6 +32,13 @@ func (o *DeleteFnReader) ReadResponse(response runtime.ClientResponse, consumer 
 		}
 		return result, nil
 
+	case 404:
+		result := NewDeleteFnNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		result := NewDeleteFnDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -51,7 +58,7 @@ func NewDeleteFnNoContent() *DeleteFnNoContent {
 
 /*DeleteFnNoContent handles this case with default header values.
 
-Fn successfully deleted
+Function successfully deleted.
 */
 type DeleteFnNoContent struct {
 }
@@ -61,6 +68,35 @@ func (o *DeleteFnNoContent) Error() string {
 }
 
 func (o *DeleteFnNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewDeleteFnNotFound creates a DeleteFnNotFound with default headers values
+func NewDeleteFnNotFound() *DeleteFnNotFound {
+	return &DeleteFnNotFound{}
+}
+
+/*DeleteFnNotFound handles this case with default header values.
+
+Function does not exist.
+*/
+type DeleteFnNotFound struct {
+	Payload *modelsv2.Error
+}
+
+func (o *DeleteFnNotFound) Error() string {
+	return fmt.Sprintf("[DELETE /fns/{fnID}][%d] deleteFnNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteFnNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

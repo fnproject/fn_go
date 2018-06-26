@@ -65,12 +65,12 @@ for the update fn operation typically these are written to a http.Request
 type UpdateFnParams struct {
 
 	/*Body
-	  Fn to upsert
+	  Function data to merge with current values.
 
 	*/
 	Body *modelsv2.Fn
 	/*FnID
-	  Function ID.
+	  Opaque, unique Function ID.
 
 	*/
 	FnID string

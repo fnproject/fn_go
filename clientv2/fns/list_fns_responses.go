@@ -51,7 +51,7 @@ func NewListFnsOK() *ListFnsOK {
 
 /*ListFnsOK handles this case with default header values.
 
-List of fns.
+List of Functions.
 */
 type ListFnsOK struct {
 	Payload *modelsv2.FnList

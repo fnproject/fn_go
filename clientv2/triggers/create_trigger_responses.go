@@ -65,7 +65,7 @@ func NewCreateTriggerOK() *CreateTriggerOK {
 
 /*CreateTriggerOK handles this case with default header values.
 
-Created Triggers data
+Trigger details.
 */
 type CreateTriggerOK struct {
 	Payload *modelsv2.Trigger
@@ -94,7 +94,7 @@ func NewCreateTriggerBadRequest() *CreateTriggerBadRequest {
 
 /*CreateTriggerBadRequest handles this case with default header values.
 
-Invalid Trigger
+Invalid Trigger.
 */
 type CreateTriggerBadRequest struct {
 	Payload *modelsv2.Error
@@ -154,7 +154,7 @@ func NewCreateTriggerDefault(code int) *CreateTriggerDefault {
 
 /*CreateTriggerDefault handles this case with default header values.
 
-Error
+An unexpected error occurred.
 */
 type CreateTriggerDefault struct {
 	_statusCode int

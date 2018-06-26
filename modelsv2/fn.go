@@ -19,13 +19,13 @@ import (
 // swagger:model Fn
 type Fn struct {
 
-	// Func annotations - this is a map of annotations attached to this func, keys must not exceed 128 bytes and must consist of non-whitespace printable ascii characters, and the seralized representation of individual values must not exeed 512 bytes
+	// Func annotations - this is a map of annotations attached to this func, keys must not exceed 128 bytes and must consist of non-whitespace printable ascii characters, and the seralized representation of individual values must not exeed 512 bytes.
 	Annotations map[string]interface{} `json:"annotations,omitempty"`
 
 	// App ID.
 	AppID string `json:"app_id,omitempty"`
 
-	// Func configuration key values
+	// Function configuration key values.
 	Config map[string]string `json:"config,omitempty"`
 
 	// Time when function was created. Always in UTC RFC3339.
@@ -41,19 +41,19 @@ type Fn struct {
 	// Read Only: true
 	ID string `json:"id,omitempty"`
 
-	// Hot functions idle timeout before container termination. Value in Seconds
+	// Hot functions idle timeout before container termination. Value in Seconds.
 	IDLETimeout *int32 `json:"idle_timeout,omitempty"`
 
-	// full container image name, e.g. hub.docker.com/fnproject/yo or fnproject/yo (default registry: hub.docker.com)
+	// Full container image name, e.g. hub.docker.com/fnproject/yo or fnproject/yo (default registry: hub.docker.com)
 	Image string `json:"image,omitempty"`
 
-	// Max usable memory given to function (MiB).
+	// Maximum usable memory given to function (MiB).
 	Mem uint64 `json:"mem,omitempty"`
 
-	// unique name for this function.
+	// Unique name for this function.
 	Name string `json:"name,omitempty"`
 
-	// Timeout for executions of a function. Value in Seconds
+	// Timeout for executions of a function. Value in Seconds.
 	Timeout *int32 `json:"timeout,omitempty"`
 
 	// Most recent time that function was updated. Always in UTC RFC3339.

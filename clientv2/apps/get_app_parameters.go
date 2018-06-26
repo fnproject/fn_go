@@ -63,7 +63,7 @@ for the get app operation typically these are written to a http.Request
 type GetAppParams struct {
 
 	/*AppID
-	  Opaque Unique application ID
+	  Opaque, unique Application ID.
 
 	*/
 	AppID string

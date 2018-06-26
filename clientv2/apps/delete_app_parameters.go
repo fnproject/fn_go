@@ -63,7 +63,7 @@ for the delete app operation typically these are written to a http.Request
 type DeleteAppParams struct {
 
 	/*AppID
-	  Opaque Unique application ID
+	  Opaque, unique Application ID.
 
 	*/
 	AppID string

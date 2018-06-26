@@ -65,12 +65,12 @@ for the update app operation typically these are written to a http.Request
 type UpdateAppParams struct {
 
 	/*AppID
-	  Opaque Unique application ID
+	  Opaque, unique Application ID.
 
 	*/
 	AppID string
 	/*Body
-	  App to modify.
+	  Application data to merge with current values.
 
 	*/
 	Body *modelsv2.App

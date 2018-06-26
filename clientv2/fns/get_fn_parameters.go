@@ -63,7 +63,7 @@ for the get fn operation typically these are written to a http.Request
 type GetFnParams struct {
 
 	/*FnID
-	  Function ID.
+	  Opaque, unique Function ID.
 
 	*/
 	FnID string

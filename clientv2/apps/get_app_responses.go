@@ -58,7 +58,7 @@ func NewGetAppOK() *GetAppOK {
 
 /*GetAppOK handles this case with default header values.
 
-App details and stats.
+Application details and stats.
 */
 type GetAppOK struct {
 	Payload *modelsv2.App
@@ -87,7 +87,7 @@ func NewGetAppNotFound() *GetAppNotFound {
 
 /*GetAppNotFound handles this case with default header values.
 
-App does not exist.
+The Application does not exist.
 */
 type GetAppNotFound struct {
 	Payload *modelsv2.Error
@@ -118,7 +118,7 @@ func NewGetAppDefault(code int) *GetAppDefault {
 
 /*GetAppDefault handles this case with default header values.
 
-Unexpected error
+An unexpected error occurred.
 */
 type GetAppDefault struct {
 	_statusCode int

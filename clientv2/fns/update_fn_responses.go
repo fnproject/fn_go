@@ -39,6 +39,13 @@ func (o *UpdateFnReader) ReadResponse(response runtime.ClientResponse, consumer 
 		}
 		return nil, result
 
+	case 404:
+		result := NewUpdateFnNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		result := NewUpdateFnDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -58,7 +65,7 @@ func NewUpdateFnOK() *UpdateFnOK {
 
 /*UpdateFnOK handles this case with default header values.
 
-Fn metadata
+Updated Function metadata.
 */
 type UpdateFnOK struct {
 	Payload *modelsv2.Fn
@@ -109,6 +116,35 @@ func (o *UpdateFnBadRequest) readResponse(response runtime.ClientResponse, consu
 	return nil
 }
 
+// NewUpdateFnNotFound creates a UpdateFnNotFound with default headers values
+func NewUpdateFnNotFound() *UpdateFnNotFound {
+	return &UpdateFnNotFound{}
+}
+
+/*UpdateFnNotFound handles this case with default header values.
+
+The Function does not exist.
+*/
+type UpdateFnNotFound struct {
+	Payload *modelsv2.Error
+}
+
+func (o *UpdateFnNotFound) Error() string {
+	return fmt.Sprintf("[PUT /fns/{fnID}][%d] updateFnNotFound  %+v", 404, o.Payload)
+}
+
+func (o *UpdateFnNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewUpdateFnDefault creates a UpdateFnDefault with default headers values
 func NewUpdateFnDefault(code int) *UpdateFnDefault {
 	return &UpdateFnDefault{
@@ -118,7 +154,7 @@ func NewUpdateFnDefault(code int) *UpdateFnDefault {
 
 /*UpdateFnDefault handles this case with default header values.
 
-Error
+An unexpected error occurred.
 */
 type UpdateFnDefault struct {
 	_statusCode int

@@ -8,7 +8,6 @@ package modelsv2
 import (
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
 )
 
@@ -16,39 +15,17 @@ import (
 // swagger:model Error
 type Error struct {
 
-	// error
-	Error *ErrorBody `json:"error,omitempty"`
+	// fields
+	// Read Only: true
+	Fields string `json:"fields,omitempty"`
+
+	// message
+	// Read Only: true
+	Message string `json:"message,omitempty"`
 }
 
 // Validate validates this error
 func (m *Error) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateError(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *Error) validateError(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Error) { // not required
-		return nil
-	}
-
-	if m.Error != nil {
-		if err := m.Error.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("error")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

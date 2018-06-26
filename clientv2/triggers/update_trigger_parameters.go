@@ -65,12 +65,12 @@ for the update trigger operation typically these are written to a http.Request
 type UpdateTriggerParams struct {
 
 	/*Body
-	  Trigger to update.
+	  Trigger data to merge into current value.
 
 	*/
 	Body *modelsv2.Trigger
 	/*TriggerID
-	  Trigger ID.
+	  Opaque, unique Trigger ID.
 
 	*/
 	TriggerID string

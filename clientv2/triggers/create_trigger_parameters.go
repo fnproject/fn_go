@@ -65,7 +65,7 @@ for the create trigger operation typically these are written to a http.Request
 type CreateTriggerParams struct {
 
 	/*Body
-	  Trigger to create.
+	  Trigger data to insert.
 
 	*/
 	Body *modelsv2.Trigger

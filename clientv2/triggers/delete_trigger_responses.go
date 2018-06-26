@@ -32,6 +32,13 @@ func (o *DeleteTriggerReader) ReadResponse(response runtime.ClientResponse, cons
 		}
 		return result, nil
 
+	case 404:
+		result := NewDeleteTriggerNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		result := NewDeleteTriggerDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -65,6 +72,35 @@ func (o *DeleteTriggerNoContent) readResponse(response runtime.ClientResponse, c
 	return nil
 }
 
+// NewDeleteTriggerNotFound creates a DeleteTriggerNotFound with default headers values
+func NewDeleteTriggerNotFound() *DeleteTriggerNotFound {
+	return &DeleteTriggerNotFound{}
+}
+
+/*DeleteTriggerNotFound handles this case with default header values.
+
+The Trigger does not exist.
+*/
+type DeleteTriggerNotFound struct {
+	Payload *modelsv2.Error
+}
+
+func (o *DeleteTriggerNotFound) Error() string {
+	return fmt.Sprintf("[DELETE /triggers/{triggerID}][%d] deleteTriggerNotFound  %+v", 404, o.Payload)
+}
+
+func (o *DeleteTriggerNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(modelsv2.Error)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
 // NewDeleteTriggerDefault creates a DeleteTriggerDefault with default headers values
 func NewDeleteTriggerDefault(code int) *DeleteTriggerDefault {
 	return &DeleteTriggerDefault{
@@ -74,7 +110,7 @@ func NewDeleteTriggerDefault(code int) *DeleteTriggerDefault {
 
 /*DeleteTriggerDefault handles this case with default header values.
 
-Error
+An unexpected error occurred.
 */
 type DeleteTriggerDefault struct {
 	_statusCode int
