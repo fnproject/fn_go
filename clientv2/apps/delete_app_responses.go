@@ -25,8 +25,8 @@ type DeleteAppReader struct {
 func (o *DeleteAppReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
 
-	case 200:
-		result := NewDeleteAppOK()
+	case 204:
+		result := NewDeleteAppNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
@@ -51,23 +51,23 @@ func (o *DeleteAppReader) ReadResponse(response runtime.ClientResponse, consumer
 	}
 }
 
-// NewDeleteAppOK creates a DeleteAppOK with default headers values
-func NewDeleteAppOK() *DeleteAppOK {
-	return &DeleteAppOK{}
+// NewDeleteAppNoContent creates a DeleteAppNoContent with default headers values
+func NewDeleteAppNoContent() *DeleteAppNoContent {
+	return &DeleteAppNoContent{}
 }
 
-/*DeleteAppOK handles this case with default header values.
+/*DeleteAppNoContent handles this case with default header values.
 
-The Application successfully deleted.
+Application successfully deleted.
 */
-type DeleteAppOK struct {
+type DeleteAppNoContent struct {
 }
 
-func (o *DeleteAppOK) Error() string {
-	return fmt.Sprintf("[DELETE /apps/{appID}][%d] deleteAppOK ", 200)
+func (o *DeleteAppNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /apps/{appID}][%d] deleteAppNoContent ", 204)
 }
 
-func (o *DeleteAppOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+func (o *DeleteAppNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	return nil
 }

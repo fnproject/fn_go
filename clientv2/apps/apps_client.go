@@ -59,7 +59,7 @@ DeleteApp deletes an application
 
 Delete the specified Application.
 */
-func (a *Client) DeleteApp(params *DeleteAppParams) (*DeleteAppOK, error) {
+func (a *Client) DeleteApp(params *DeleteAppParams) (*DeleteAppNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteAppParams()
@@ -80,7 +80,7 @@ func (a *Client) DeleteApp(params *DeleteAppParams) (*DeleteAppOK, error) {
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DeleteAppOK), nil
+	return result.(*DeleteAppNoContent), nil
 
 }
 
