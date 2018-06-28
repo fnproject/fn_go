@@ -2,14 +2,12 @@ package provider
 
 import (
 	"fmt"
-	"github.com/fnproject/fn_go/client"
-	"github.com/fnproject/fn_go/clientv2"
-	"github.com/fnproject/fn_go/client/version"
 	"net/http"
 	"net/url"
 	"strings"
 
 	"github.com/fnproject/fn_go/client"
+	"github.com/fnproject/fn_go/clientv2"
 	"github.com/fnproject/fn_go/client/version"
 )
 
@@ -64,8 +62,11 @@ func CanonicalFnAPIUrl(urlStr string) (*url.URL, error) {
 	}
 
 	//Remove /v1 from any paths here internal URL is now base URL
+
 	if strings.HasSuffix(parseUrl.Path,"/v1" ) {
-		parseUrl.Path = strings.TrimSuffix(parseUrl.Path,"v1")
+			parseUrl.Path = strings.TrimSuffix(parseUrl.Path,"v1")
+	}else if strings.HasSuffix(parseUrl.Path,"/v1/" ) {
+		parseUrl.Path = strings.TrimSuffix(parseUrl.Path, "v1/")
 	}
 
 	return parseUrl, nil

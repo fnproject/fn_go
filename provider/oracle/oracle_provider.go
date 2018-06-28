@@ -23,7 +23,6 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/oracle/oci-go-sdk/common"
 	oci "github.com/oracle/oci-go-sdk/common"
-	"net/url"
 	"github.com/fnproject/fn_go/clientv2"
 	"path"
 )

@@ -11,8 +11,6 @@ import (
 	"github.com/fnproject/fn_go/client/version"
 	"github.com/fnproject/fn_go/provider"
 	"github.com/go-openapi/strfmt"
-	"net/http"
-	"net/url"
 	"github.com/fnproject/fn_go/clientv2"
 	"path"
 	)
