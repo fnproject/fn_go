@@ -5,12 +5,12 @@ This is a golang SDK for accessing the [Fn API](https://github.com/fnproject/fn/
 Most of the code in the repository is automatically generated from the latest [Fn project API Swagger](https://github.com/fnproject/fn/blob/master/docs/swagger.yml).
 
 To generate a new client manually:
-- Make sure you have [go-swagger](https://goswagger.io/install.html) installed.
-- Clone a local copy of [fn](https://github.com/fnproject/fn), this will be used to provide a path to the swagger spec.
+- Clone a local copy of [fn](https://github.com/fnproject/fn), this will be used to provide a path to the swagger spec into your go path (e.g. `../fn` from this repo)
 
-Run the following command:
+
+Run the following commands:
 ```
-swagger generate client -f {path-to-fn}/docs/swagger.yml --client-package=client --model-package=models
+./regenerate.sh
 ```
 
 Example:
