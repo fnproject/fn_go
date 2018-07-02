@@ -36,12 +36,10 @@ func (m *CallsWrapper) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCalls(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateError(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
@@ -58,20 +56,17 @@ func (m *CallsWrapper) validateCalls(formats strfmt.Registry) error {
 	}
 
 	for i := 0; i < len(m.Calls); i++ {
-
 		if swag.IsZero(m.Calls[i]) { // not required
 			continue
 		}
 
 		if m.Calls[i] != nil {
-
 			if err := m.Calls[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("calls" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
-
 		}
 
 	}
@@ -86,14 +81,12 @@ func (m *CallsWrapper) validateError(formats strfmt.Registry) error {
 	}
 
 	if m.Error != nil {
-
 		if err := m.Error.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("error")
 			}
 			return err
 		}
-
 	}
 
 	return nil

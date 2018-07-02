@@ -30,12 +30,10 @@ func (m *AppWrapper) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateApp(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateError(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
@@ -52,14 +50,12 @@ func (m *AppWrapper) validateApp(formats strfmt.Registry) error {
 	}
 
 	if m.App != nil {
-
 		if err := m.App.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("app")
 			}
 			return err
 		}
-
 	}
 
 	return nil
@@ -72,14 +68,12 @@ func (m *AppWrapper) validateError(formats strfmt.Registry) error {
 	}
 
 	if m.Error != nil {
-
 		if err := m.Error.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("error")
 			}
 			return err
 		}
-
 	}
 
 	return nil

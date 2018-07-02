@@ -23,6 +23,8 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/oracle/oci-go-sdk/common"
 	oci "github.com/oracle/oci-go-sdk/common"
+	"github.com/fnproject/fn_go/clientv2"
+	"path"
 )
 
 const (
@@ -50,6 +52,12 @@ type Provider struct {
 	DisableCerts bool
 	//CompartmentID is the ocid of the functions compartment ID for a given function
 	CompartmentID string
+}
+
+func (op *Provider) APIClientv2() *clientv2.Fn {
+	runtime := openapi.New(op.FnApiUrl.String(),  path.Join(op.FnApiUrl.Path ,clientv2.DefaultBasePath), []string{op.FnApiUrl.Scheme})
+	runtime.Transport = op.WrapCallTransport(runtime.Transport)
+	return clientv2.New(runtime, strfmt.Default)
 }
 
 type Response struct {
@@ -162,13 +170,13 @@ func (op *Provider) WrapCallTransport(roundTripper http.RoundTripper) http.Round
 }
 
 func (op *Provider) APIClient() *fnclient.Fn {
-	runtime := openapi.New(op.FnApiUrl.Host, op.FnApiUrl.Path, []string{op.FnApiUrl.Scheme})
+	runtime := openapi.New(op.FnApiUrl.Host, path.Join(op.FnApiUrl.Path ,clientv2.DefaultBasePath), []string{op.FnApiUrl.Scheme})
 	runtime.Transport = op.WrapCallTransport(runtime.Transport)
 	return fnclient.New(runtime, strfmt.Default)
 }
 
 func (op *Provider) VersionClient() *version.Client {
-	runtime := openapi.New(op.FnApiUrl.Host, "/", []string{op.FnApiUrl.Scheme})
+	runtime := openapi.New(op.FnApiUrl.Host, op.FnApiUrl.Path, []string{op.FnApiUrl.Scheme})
 	runtime.Transport = op.WrapCallTransport(runtime.Transport)
 	return version.New(runtime, strfmt.Default)
 }

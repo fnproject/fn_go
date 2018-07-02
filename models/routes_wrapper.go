@@ -36,12 +36,10 @@ func (m *RoutesWrapper) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateError(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
 	if err := m.validateRoutes(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
@@ -58,14 +56,12 @@ func (m *RoutesWrapper) validateError(formats strfmt.Registry) error {
 	}
 
 	if m.Error != nil {
-
 		if err := m.Error.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("error")
 			}
 			return err
 		}
-
 	}
 
 	return nil
@@ -78,20 +74,17 @@ func (m *RoutesWrapper) validateRoutes(formats strfmt.Registry) error {
 	}
 
 	for i := 0; i < len(m.Routes); i++ {
-
 		if swag.IsZero(m.Routes[i]) { // not required
 			continue
 		}
 
 		if m.Routes[i] != nil {
-
 			if err := m.Routes[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("routes" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
-
 		}
 
 	}

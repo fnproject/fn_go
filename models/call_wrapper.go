@@ -27,7 +27,6 @@ func (m *CallWrapper) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateCall(formats); err != nil {
-		// prop
 		res = append(res, err)
 	}
 
@@ -44,14 +43,12 @@ func (m *CallWrapper) validateCall(formats strfmt.Registry) error {
 	}
 
 	if m.Call != nil {
-
 		if err := m.Call.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("call")
 			}
 			return err
 		}
-
 	}
 
 	return nil

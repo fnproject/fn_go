@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/fnproject/fn_go/client"
+	"github.com/fnproject/fn_go/clientv2"
 	"github.com/fnproject/fn_go/client/version"
 )
 
@@ -35,7 +36,8 @@ type Provider interface {
 	// WrapCallTransport adds any request signing or auth to an existing round tripper for calls
 	WrapCallTransport(http.RoundTripper) http.RoundTripper
 	APIClient() *client.Fn
-	VersionClient() *version.Client
+	APIClientv2() *clientv2.Fn
+    VersionClient() *version.Client
 }
 
 // CanonicalFnAPIUrl canonicalises an *FN_API_URL  to a default value
@@ -59,9 +61,12 @@ func CanonicalFnAPIUrl(urlStr string) (*url.URL, error) {
 		}
 	}
 
-	//maintain backwards compatibility with first version FN_API_URL env vars
-	if parseUrl.Path == "" || parseUrl.Path == "/" {
-		parseUrl.Path = "/v1"
+	//Remove /v1 from any paths here internal URL is now base URL
+
+	if strings.HasSuffix(parseUrl.Path,"/v1" ) {
+			parseUrl.Path = strings.TrimSuffix(parseUrl.Path,"v1")
+	}else if strings.HasSuffix(parseUrl.Path,"/v1/" ) {
+		parseUrl.Path = strings.TrimSuffix(parseUrl.Path, "v1/")
 	}
 
 	return parseUrl, nil
