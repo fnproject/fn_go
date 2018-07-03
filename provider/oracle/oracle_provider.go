@@ -55,7 +55,7 @@ type Provider struct {
 }
 
 func (op *Provider) APIClientv2() *clientv2.Fn {
-	runtime := openapi.New(op.FnApiUrl.String(),  path.Join(op.FnApiUrl.Path ,clientv2.DefaultBasePath), []string{op.FnApiUrl.Scheme})
+	runtime := openapi.New(op.FnApiUrl.Host, path.Join(op.FnApiUrl.Path, clientv2.DefaultBasePath), []string{op.FnApiUrl.Scheme})
 	runtime.Transport = op.WrapCallTransport(runtime.Transport)
 	return clientv2.New(runtime, strfmt.Default)
 }
