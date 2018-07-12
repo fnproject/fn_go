@@ -14,17 +14,18 @@ import (
 	"path/filepath"
 	"time"
 
+	"path"
+
 	fnclient "github.com/fnproject/fn_go/client"
 	apiapps "github.com/fnproject/fn_go/client/apps"
 	"github.com/fnproject/fn_go/client/version"
+	"github.com/fnproject/fn_go/clientv2"
 	"github.com/fnproject/fn_go/provider"
 	openapi "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 	"github.com/mitchellh/go-homedir"
 	"github.com/oracle/oci-go-sdk/common"
 	oci "github.com/oracle/oci-go-sdk/common"
-	"github.com/fnproject/fn_go/clientv2"
-	"path"
 )
 
 const (
@@ -170,7 +171,7 @@ func (op *Provider) WrapCallTransport(roundTripper http.RoundTripper) http.Round
 }
 
 func (op *Provider) APIClient() *fnclient.Fn {
-	runtime := openapi.New(op.FnApiUrl.Host, path.Join(op.FnApiUrl.Path ,clientv2.DefaultBasePath), []string{op.FnApiUrl.Scheme})
+	runtime := openapi.New(op.FnApiUrl.Host, path.Join(op.FnApiUrl.Path, fnclient.DefaultBasePath), []string{op.FnApiUrl.Scheme})
 	runtime.Transport = op.WrapCallTransport(runtime.Transport)
 	return fnclient.New(runtime, strfmt.Default)
 }
