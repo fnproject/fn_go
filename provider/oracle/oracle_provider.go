@@ -2,8 +2,10 @@ package oracle
 
 import (
 	"context"
+	"crypto/rand"
 	"crypto/rsa"
 	"crypto/tls"
+	"encoding/base32"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -23,7 +25,6 @@ import (
 	"github.com/fnproject/fn_go/provider"
 	openapi "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-	"github.com/mitchellh/go-homedir"
 	"github.com/oracle/oci-go-sdk/common"
 	oci "github.com/oracle/oci-go-sdk/common"
 )
@@ -167,6 +168,10 @@ func (op *Provider) WrapCallTransport(roundTripper http.RoundTripper) http.Round
 		compartmentID: op.CompartmentID,
 	}
 
+	roundTripper = requestIdRoundTripper{
+		transport: roundTripper,
+	}
+
 	return roundTripper
 }
 
@@ -229,6 +234,23 @@ func signRequest(signer common.HTTPRequestSigner, request *http.Request) (signed
 	err = signer.Sign(request)
 
 	return request, err
+}
+
+// http.RoundTripper middleware that injects an opc-request-id header
+type requestIdRoundTripper struct {
+	transport http.RoundTripper
+}
+
+func newID() String {
+	randBytes := make([]byte, 16)
+	rand.Read(randBytes)
+	return base32.StdEncoding.EncodeToString(randBytes)
+}
+
+func (t requestIdRoundTripper) RoundTrip(request *http.Request) (response *http.Response, e error) {
+	request.Header.Set("opc-request-id", newID())
+	response, e = t.transport.RoundTrip(request)
+	return
 }
 
 //  http.RoundTripper middleware that adds an opc-compartment-id header to all requests
