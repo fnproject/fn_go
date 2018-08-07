@@ -25,6 +25,7 @@ import (
 	"github.com/fnproject/fn_go/provider"
 	openapi "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	homedir "github.com/mitchellh/go-homedir"
 	"github.com/oracle/oci-go-sdk/common"
 	oci "github.com/oracle/oci-go-sdk/common"
 )
@@ -241,7 +242,7 @@ type requestIdRoundTripper struct {
 	transport http.RoundTripper
 }
 
-func newID() String {
+func newID() string {
 	randBytes := make([]byte, 16)
 	rand.Read(randBytes)
 	return base32.StdEncoding.EncodeToString(randBytes)
