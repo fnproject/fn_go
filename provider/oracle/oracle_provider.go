@@ -210,6 +210,11 @@ func (t ociSigningRoundTripper) RoundTrip(request *http.Request) (response *http
 	if request.Header.Get("Date") == "" {
 		request.Header.Set("Date", time.Now().UTC().Format(http.TimeFormat))
 	}
+	requestID := provider.GetRequestID(request.Context())
+	if requestID != "" {
+		request.Header.Set("Opc-Request-Id", requestID)
+
+	}
 	request, err = signRequest(t.ociClient, request)
 
 	if err != nil {
