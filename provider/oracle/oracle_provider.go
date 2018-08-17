@@ -2,10 +2,8 @@ package oracle
 
 import (
 	"context"
-	"crypto/rand"
 	"crypto/rsa"
 	"crypto/tls"
-	"encoding/base32"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -210,11 +208,6 @@ func (t ociSigningRoundTripper) RoundTrip(request *http.Request) (response *http
 	if request.Header.Get("Date") == "" {
 		request.Header.Set("Date", time.Now().UTC().Format(http.TimeFormat))
 	}
-	requestID := provider.GetRequestID(request.Context())
-	if requestID != "" {
-		request.Header.Set("Opc-Request-Id", requestID)
-
-	}
 	request, err = signRequest(t.ociClient, request)
 
 	if err != nil {
@@ -247,14 +240,12 @@ type requestIdRoundTripper struct {
 	transport http.RoundTripper
 }
 
-func newID() string {
-	randBytes := make([]byte, 16)
-	rand.Read(randBytes)
-	return base32.StdEncoding.EncodeToString(randBytes)
-}
-
 func (t requestIdRoundTripper) RoundTrip(request *http.Request) (response *http.Response, e error) {
-	request.Header.Set("opc-request-id", newID())
+	requestID := provider.GetRequestID(request.Context())
+	if requestID != "" {
+		request.Header.Set("Opc-Request-Id", requestID)
+
+	}
 	response, e = t.transport.RoundTrip(request)
 	return
 }
