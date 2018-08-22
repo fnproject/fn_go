@@ -59,6 +59,9 @@ type Route struct {
 	// Timeout for executions of this route. Value in Seconds
 	Timeout *int32 `json:"timeout,omitempty"`
 
+	// Tmpfs size (MiB).
+	TmpfsSize uint32 `json:"tmpfs_size,omitempty"`
+
 	// Route type
 	// Enum: [sync async]
 	Type string `json:"type,omitempty"`
