@@ -48,7 +48,7 @@ type Fn struct {
 	Image string `json:"image,omitempty"`
 
 	// Maximum usable memory given to function (MiB).
-	Mem uint64 `json:"mem,omitempty"`
+	Memory uint64 `json:"memory,omitempty"`
 
 	// Unique name for this function.
 	Name string `json:"name,omitempty"`
