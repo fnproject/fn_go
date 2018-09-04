@@ -25,62 +25,62 @@ type Client struct {
 }
 
 /*
-GetAppsAppCalls gets app bound calls
+GetCalls gets app bound calls
 
 Get app-bound calls can filter to route-bound calls, results returned in created_at, descending order (newest first).
 */
-func (a *Client) GetAppsAppCalls(params *GetAppsAppCallsParams) (*GetAppsAppCallsOK, error) {
+func (a *Client) GetCalls(params *GetCallsParams) (*GetCallsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetAppsAppCallsParams()
+		params = NewGetCallsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetAppsAppCalls",
+		ID:                 "GetCalls",
 		Method:             "GET",
-		PathPattern:        "/apps/{app}/calls",
+		PathPattern:        "/calls",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetAppsAppCallsReader{formats: a.formats},
+		Reader:             &GetCallsReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GetAppsAppCallsOK), nil
+	return result.(*GetCallsOK), nil
 
 }
 
 /*
-GetAppsAppCallsCall gets call information
+GetCallsCallID gets call information
 
 Get call information
 */
-func (a *Client) GetAppsAppCallsCall(params *GetAppsAppCallsCallParams) (*GetAppsAppCallsCallOK, error) {
+func (a *Client) GetCallsCallID(params *GetCallsCallIDParams) (*GetCallsCallIDOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetAppsAppCallsCallParams()
+		params = NewGetCallsCallIDParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetAppsAppCallsCall",
+		ID:                 "GetCallsCallID",
 		Method:             "GET",
-		PathPattern:        "/apps/{app}/calls/{call}",
+		PathPattern:        "/calls/{callID}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetAppsAppCallsCallReader{formats: a.formats},
+		Reader:             &GetCallsCallIDReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GetAppsAppCallsCallOK), nil
+	return result.(*GetCallsCallIDOK), nil
 
 }
 

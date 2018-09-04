@@ -25,32 +25,32 @@ type Client struct {
 }
 
 /*
-GetAppsAppCallsCallLog gets call logs
+GetCallLogs gets call logs for an application
 
-Get call logs
+Returns the call logs for a specific Application.
 */
-func (a *Client) GetAppsAppCallsCallLog(params *GetAppsAppCallsCallLogParams) (*GetAppsAppCallsCallLogOK, error) {
+func (a *Client) GetCallLogs(params *GetCallLogsParams) (*GetCallLogsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetAppsAppCallsCallLogParams()
+		params = NewGetCallLogsParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "GetAppsAppCallsCallLog",
+		ID:                 "GetCallLogs",
 		Method:             "GET",
-		PathPattern:        "/apps/{app}/calls/{call}/log",
+		PathPattern:        "/logs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
 		Params:             params,
-		Reader:             &GetAppsAppCallsCallLogReader{formats: a.formats},
+		Reader:             &GetCallLogsReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GetAppsAppCallsCallLogOK), nil
+	return result.(*GetCallLogsOK), nil
 
 }
 

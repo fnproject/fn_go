@@ -37,7 +37,7 @@ type Call struct {
 	// Read Only: true
 	Error string `json:"error,omitempty"`
 
-	// Call UUID ID.
+	// Call ID.
 	// Read Only: true
 	ID string `json:"id,omitempty"`
 

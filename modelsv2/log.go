@@ -15,7 +15,7 @@ import (
 // swagger:model Log
 type Log struct {
 
-	// Call UUID ID
+	// Call ID
 	CallID string `json:"call_id,omitempty"`
 
 	// log
