@@ -6,9 +6,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/fnproject/fn_go/client"
-	"github.com/fnproject/fn_go/clientv2"
 	"github.com/fnproject/fn_go/client/version"
+	"github.com/fnproject/fn_go/clientv2"
 )
 
 // ProviderFunc constructs a provider
@@ -31,13 +30,10 @@ func (c *Providers) Register(name string, pf ProviderFunc) {
 type Provider interface {
 	// APIURL returns the current API URL base to use with this provider
 	APIURL() *url.URL
-	// CallURL returns the default Call URL base to use with this provider
-	CallURL(string) (*url.URL, error)
 	// WrapCallTransport adds any request signing or auth to an existing round tripper for calls
 	WrapCallTransport(http.RoundTripper) http.RoundTripper
-	APIClient() *client.Fn
 	APIClientv2() *clientv2.Fn
-    VersionClient() *version.Client
+	VersionClient() *version.Client
 }
 
 // CanonicalFnAPIUrl canonicalises an *FN_API_URL  to a default value
@@ -63,9 +59,9 @@ func CanonicalFnAPIUrl(urlStr string) (*url.URL, error) {
 
 	//Remove /v1 from any paths here internal URL is now base URL
 
-	if strings.HasSuffix(parseUrl.Path,"/v1" ) {
-			parseUrl.Path = strings.TrimSuffix(parseUrl.Path,"v1")
-	}else if strings.HasSuffix(parseUrl.Path,"/v1/" ) {
+	if strings.HasSuffix(parseUrl.Path, "/v1") {
+		parseUrl.Path = strings.TrimSuffix(parseUrl.Path, "v1")
+	} else if strings.HasSuffix(parseUrl.Path, "/v1/") {
 		parseUrl.Path = strings.TrimSuffix(parseUrl.Path, "v1/")
 	}
 

@@ -3,8 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+
 	"github.com/fnproject/fn_go"
-	"github.com/fnproject/fn_go/client/apps"
+	"github.com/fnproject/fn_go/clientv2/apps"
 	"github.com/fnproject/fn_go/provider"
 )
 
@@ -20,25 +21,25 @@ func main() {
 		panic(err.Error())
 	}
 
-	appClient := currentProvider.APIClient().Apps
+	appClient := currentProvider.APIClientv2().Apps
 
 	ctx := context.Background()
 
 	var cursor string
 	for {
-		params := &apps.GetAppsParams{
+		params := &apps.ListAppsParams{
 			Context: ctx,
 		}
 		if cursor != "" {
 			params.Cursor = &cursor
 		}
 
-		gotApps, err := appClient.GetApps(params)
+		gotApps, err := appClient.ListApps(params)
 		if err != nil {
 			panic(err.Error())
 		}
 
-		for _, app := range gotApps.Payload.Apps {
+		for _, app := range gotApps.Payload.Items {
 			fmt.Printf("App %s\n", app.Name)
 		}
 
