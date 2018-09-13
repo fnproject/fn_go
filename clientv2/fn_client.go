@@ -12,7 +12,9 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/fnproject/fn_go/clientv2/apps"
+	"github.com/fnproject/fn_go/clientv2/call"
 	"github.com/fnproject/fn_go/clientv2/fns"
+	"github.com/fnproject/fn_go/clientv2/operations"
 	"github.com/fnproject/fn_go/clientv2/triggers"
 )
 
@@ -61,7 +63,11 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Fn {
 
 	cli.Apps = apps.New(transport, formats)
 
+	cli.Call = call.New(transport, formats)
+
 	cli.Fns = fns.New(transport, formats)
+
+	cli.Operations = operations.New(transport, formats)
 
 	cli.Triggers = triggers.New(transport, formats)
 
@@ -111,7 +117,11 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type Fn struct {
 	Apps *apps.Client
 
+	Call *call.Client
+
 	Fns *fns.Client
+
+	Operations *operations.Client
 
 	Triggers *triggers.Client
 
@@ -124,7 +134,11 @@ func (c *Fn) SetTransport(transport runtime.ClientTransport) {
 
 	c.Apps.SetTransport(transport)
 
+	c.Call.SetTransport(transport)
+
 	c.Fns.SetTransport(transport)
+
+	c.Operations.SetTransport(transport)
 
 	c.Triggers.SetTransport(transport)
 
