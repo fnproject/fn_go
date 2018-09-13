@@ -1,10 +1,8 @@
 package oracle
 
 import (
-	"context"
 	"crypto/rsa"
 	"crypto/tls"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -16,8 +14,6 @@ import (
 
 	"path"
 
-	fnclient "github.com/fnproject/fn_go/client"
-	apiapps "github.com/fnproject/fn_go/client/apps"
 	"github.com/fnproject/fn_go/client/version"
 	"github.com/fnproject/fn_go/clientv2"
 	"github.com/fnproject/fn_go/provider"
@@ -79,19 +75,6 @@ func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider
 		return nil, err
 	}
 
-	var callUrl *url.URL
-	callUrlStr := configSource.GetString(provider.CfgFnCallURL)
-	if callUrlStr == "" {
-		myCallUrl := *apiUrl
-		callUrl = &myCallUrl
-		callUrl.Path = "/r"
-	} else {
-		callUrl, err = url.Parse(callUrlStr)
-		if err != nil {
-			return nil, fmt.Errorf("failed to parse call url %s specified in %s: %s", callUrlStr, provider.CfgFnCallURL, err)
-		}
-	}
-
 	keyID, pKey, err := loadOracleConfig(configSource, passphraseSource)
 
 	if err != nil {
@@ -103,43 +86,11 @@ func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider
 		return nil, fmt.Errorf("no OCI compartment ID specified in config key %s ", CfgCompartmentID)
 	}
 	return &Provider{FnApiUrl: apiUrl,
-		FnCallUrl:     callUrl,
 		KeyId:         keyID,
 		PrivateKey:    pKey,
 		DisableCerts:  configSource.GetBool(CfgDisableCerts),
 		CompartmentID: compartmentID,
 	}, nil
-}
-
-func (op *Provider) CallURL(appName string) (*url.URL, error) {
-	appClient := *op.APIClient()
-	params := &apiapps.GetAppsAppParams{
-		Context: context.Background(),
-		App:     appName,
-	}
-
-	resp, err := appClient.Apps.GetAppsApp(params)
-	if err != nil {
-		switch e := err.(type) {
-		case *apiapps.GetAppsAppNotFound:
-			return nil, fmt.Errorf("%v", e.Payload.Error.Message)
-		default:
-			return nil, err
-		}
-	}
-
-	data, err := json.Marshal(resp.Payload.App.Annotations)
-	if err != nil {
-		return nil, err
-	}
-	var annons Annotations
-	err = json.Unmarshal(data, &annons)
-	if err != nil {
-		return nil, err
-	}
-	op.FnCallUrl.Host = annons.ShortCode + "." + op.FnCallUrl.Host
-
-	return op.FnCallUrl, err
 }
 
 func (op *Provider) APIURL() *url.URL {
@@ -174,10 +125,10 @@ func (op *Provider) WrapCallTransport(roundTripper http.RoundTripper) http.Round
 	return roundTripper
 }
 
-func (op *Provider) APIClient() *fnclient.Fn {
-	runtime := openapi.New(op.FnApiUrl.Host, path.Join(op.FnApiUrl.Path, fnclient.DefaultBasePath), []string{op.FnApiUrl.Scheme})
+func (op *Provider) APIClient() *clientv2.Fn {
+	runtime := openapi.New(op.FnApiUrl.Host, path.Join(op.FnApiUrl.Path, clientv2.DefaultBasePath), []string{op.FnApiUrl.Scheme})
 	runtime.Transport = op.WrapCallTransport(runtime.Transport)
-	return fnclient.New(runtime, strfmt.Default)
+	return clientv2.New(runtime, strfmt.Default)
 }
 
 func (op *Provider) VersionClient() *version.Client {
