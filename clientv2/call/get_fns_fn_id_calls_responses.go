@@ -39,6 +39,13 @@ func (o *GetFnsFnIDCallsReader) ReadResponse(response runtime.ClientResponse, co
 		}
 		return nil, result
 
+	case 410:
+		result := NewGetFnsFnIDCallsGone()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
@@ -98,6 +105,27 @@ func (o *GetFnsFnIDCallsNotFound) readResponse(response runtime.ClientResponse, 
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
+
+	return nil
+}
+
+// NewGetFnsFnIDCallsGone creates a GetFnsFnIDCallsGone with default headers values
+func NewGetFnsFnIDCallsGone() *GetFnsFnIDCallsGone {
+	return &GetFnsFnIDCallsGone{}
+}
+
+/*GetFnsFnIDCallsGone handles this case with default header values.
+
+Server does not support this operation.
+*/
+type GetFnsFnIDCallsGone struct {
+}
+
+func (o *GetFnsFnIDCallsGone) Error() string {
+	return fmt.Sprintf("[GET /fns/{fnID}/calls][%d] getFnsFnIdCallsGone ", 410)
+}
+
+func (o *GetFnsFnIDCallsGone) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	return nil
 }

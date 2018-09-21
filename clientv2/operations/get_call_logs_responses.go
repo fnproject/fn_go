@@ -39,6 +39,13 @@ func (o *GetCallLogsReader) ReadResponse(response runtime.ClientResponse, consum
 		}
 		return nil, result
 
+	case 410:
+		result := NewGetCallLogsGone()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
 	}
@@ -98,6 +105,27 @@ func (o *GetCallLogsNotFound) readResponse(response runtime.ClientResponse, cons
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
+
+	return nil
+}
+
+// NewGetCallLogsGone creates a GetCallLogsGone with default headers values
+func NewGetCallLogsGone() *GetCallLogsGone {
+	return &GetCallLogsGone{}
+}
+
+/*GetCallLogsGone handles this case with default header values.
+
+Server does not support this operation.
+*/
+type GetCallLogsGone struct {
+}
+
+func (o *GetCallLogsGone) Error() string {
+	return fmt.Sprintf("[GET /fns/{fnID}/calls/{callID}/log][%d] getCallLogsGone ", 410)
+}
+
+func (o *GetCallLogsGone) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	return nil
 }

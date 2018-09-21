@@ -34,7 +34,7 @@ type Fn struct {
 	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
 	// Payload format sent into function.
-	// Enum: [default http json cloudevent]
+	// Enum: [default http http-stream json cloudevent]
 	Format string `json:"format,omitempty"`
 
 	// Unique identifier
@@ -101,7 +101,7 @@ var fnTypeFormatPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["default","http","json","cloudevent"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["default","http","http-stream","json","cloudevent"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -116,6 +116,9 @@ const (
 
 	// FnFormatHTTP captures enum value "http"
 	FnFormatHTTP string = "http"
+
+	// FnFormatHTTPStream captures enum value "http-stream"
+	FnFormatHTTPStream string = "http-stream"
 
 	// FnFormatJSON captures enum value "json"
 	FnFormatJSON string = "json"
