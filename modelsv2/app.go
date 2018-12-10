@@ -37,7 +37,7 @@ type App struct {
 	Name string `json:"name,omitempty"`
 
 	// A comma separated list of syslog urls to send all function logs to. supports tls, udp or tcp. e.g. tls://logs.papertrailapp.com:1
-	SyslogURL string `json:"syslog_url,omitempty"`
+	SyslogURL *string `json:"syslog_url,omitempty"`
 
 	// Most recent time that app was updated. Always in UTC.
 	// Read Only: true
