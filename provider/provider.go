@@ -119,11 +119,10 @@ func Invoke(provider Provider, invokeURL string, content io.Reader, output io.Wr
 		}
 	}
 
-	req.Header = headers
-	if contentType != "" {
-		req.Header.Set("Content-Type", contentType)
-	} else {
-		req.Header.Set("Content-Type", "text/plain")
+	for key, v := range headers {
+		for _, value := range v {
+			req.Header.Add(key, value)
+		}
 	}
 
 	transport := provider.WrapCallTransport(http.DefaultTransport)
