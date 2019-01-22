@@ -133,7 +133,7 @@ func Invoke(provider Provider, invokeURL string, content io.Reader, output io.Wr
 		if err != nil {
 			return err
 		}
-		fmt.Printf(string(b) + "\n")
+		io.WriteString(os.Stderr, string(b)+"\n")
 	}
 
 	resp, err := httpClient.Do(req)
@@ -147,7 +147,7 @@ func Invoke(provider Provider, invokeURL string, content io.Reader, output io.Wr
 		if err != nil {
 			return err
 		}
-		fmt.Printf(string(b) + "\n")
+		io.WriteString(os.Stderr, string(b)+"\n")
 	}
 
 	// for sync calls
