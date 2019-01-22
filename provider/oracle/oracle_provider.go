@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -336,4 +337,8 @@ func getPrivateKey(keyBytes []byte, pKeyPword, pkeyFilePath string) (*rsa.Privat
 	}
 
 	return key, nil
+}
+
+func (op *Provider) Invoke(invokeURL string, content io.Reader, output io.Writer, headers http.Header, contentType string, debug bool) error {
+	return provider.Invoke(op, invokeURL, content, output, headers, contentType, debug)
 }
