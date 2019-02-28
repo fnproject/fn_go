@@ -1,6 +1,8 @@
 package defaultprovider
 
 import (
+	"io"
+
 	openapi "github.com/go-openapi/runtime/client"
 
 	"net/http"
@@ -68,4 +70,8 @@ func (op *Provider) VersionClient() *version.Client {
 	runtime := openapi.New(op.FnApiUrl.Host, "/", []string{op.FnApiUrl.Scheme})
 	runtime.Transport = op.WrapCallTransport(runtime.Transport)
 	return version.New(runtime, strfmt.Default)
+}
+
+func (op *Provider) Invoke(invokeURL string, content io.Reader, output io.Writer, headers http.Header, contentType string, debug bool) error {
+	return provider.Invoke(op, invokeURL, content, output, headers, contentType, debug)
 }
