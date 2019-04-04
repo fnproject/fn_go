@@ -65,7 +65,7 @@ func (dp *Provider) APIClient() *clientv2.Fn {
 }
 
 func (op *Provider) VersionClient() *version.Client {
-	runtime := openapi.New(op.FnApiUrl.Host, "/", []string{op.FnApiUrl.Scheme})
+	runtime := openapi.New(op.FnApiUrl.Host, op.FnApiUrl.Path, []string{op.FnApiUrl.Scheme})
 	runtime.Transport = op.WrapCallTransport(runtime.Transport)
 	return version.New(runtime, strfmt.Default)
 }
