@@ -57,14 +57,6 @@ func CanonicalFnAPIUrl(urlStr string) (*url.URL, error) {
 		}
 	}
 
-	//Remove /v1 from any paths here internal URL is now base URL
-
-	if strings.HasSuffix(parseUrl.Path, "/v1") {
-		parseUrl.Path = strings.TrimSuffix(parseUrl.Path, "v1")
-	} else if strings.HasSuffix(parseUrl.Path, "/v1/") {
-		parseUrl.Path = strings.TrimSuffix(parseUrl.Path, "v1/")
-	}
-
 	return parseUrl, nil
 }
 

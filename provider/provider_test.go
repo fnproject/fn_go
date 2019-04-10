@@ -12,14 +12,14 @@ func TestCanonicaliseUrlURL(t *testing.T) {
 		port   string
 		path   string
 	}{
-		{"http://localhost:8080/v1", "http", "localhost", "8080", "/"},
+		{"http://localhost:8080/v1", "http", "localhost", "8080", "/v1"},
 		{"http://localhost:8080", "http", "localhost", "8080", ""},
 		{"http://localhost", "http", "localhost", "80", ""},
 		{"localhost", "http", "localhost", "80", ""},
 		{"localhost:8080", "http", "localhost", "8080", ""},
-		{"localhost/v1", "http", "localhost", "80", "/"},
+		{"localhost/v1", "http", "localhost", "80", "/v1"},
 		{"localhost/", "http", "localhost", "80", "/"},
-		{"https://localhost/v1", "https", "localhost", "443", "/"},
+		{"https://localhost/v1", "https", "localhost", "443", "/v1"},
 		{"https://someprovider/specificversion/withasubpath", "https", "someprovider", "443", "/specificversion/withasubpath"},
 		{"https://someprovider:450/specificversion/withasubpath", "https", "someprovider", "450", "/specificversion/withasubpath"},
 	}
