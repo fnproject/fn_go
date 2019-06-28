@@ -4,13 +4,15 @@ import (
 	"github.com/fnproject/fn_go/provider"
 	"github.com/fnproject/fn_go/provider/defaultprovider"
 	"github.com/fnproject/fn_go/provider/oracle"
+	ip "github.com/fnproject/fn_go/provider/oracle-ip"
 )
 
 // DefaultProviders includes the bundled providers available in the client
 var DefaultProviders = provider.Providers{
 	Providers: map[string]provider.ProviderFunc{
-		"":        defaultprovider.NewFromConfig,
-		"default": defaultprovider.NewFromConfig,
-		"oracle":  oracle.NewFromConfig,
+		"":          defaultprovider.NewFromConfig,
+		"default":   defaultprovider.NewFromConfig,
+		"oracle":    oracle.NewFromConfig,
+		"oracle-ip": ip.NewFromConfig,
 	},
 }
