@@ -50,6 +50,10 @@ func (dp *Provider) WrapCallTransport(t http.RoundTripper) http.RoundTripper {
 	return t
 }
 
+func (dp *Provider) UnavailableResources() []provider.FnResourceType {
+	return []provider.FnResourceType{}
+}
+
 func (dp *Provider) APIURL() *url.URL {
 	return dp.FnApiUrl
 }
