@@ -41,6 +41,7 @@ github.com/mitchellh/go-homedir
 github.com/mitchellh/mapstructure
 # github.com/oracle/oci-go-sdk v1.5.0
 github.com/oracle/oci-go-sdk/common
+github.com/oracle/oci-go-sdk/common/auth
 # golang.org/x/crypto v0.0.0-20180527072434-ab813273cd59
 golang.org/x/crypto/ssh/terminal
 # golang.org/x/net v0.0.0-20180524181706-dfa909b99c79
