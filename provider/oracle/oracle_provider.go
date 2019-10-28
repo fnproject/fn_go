@@ -50,10 +50,15 @@ type Provider struct {
 	DisableCerts bool
 	//CompartmentID is the ocid of the functions compartment ID for a given function
 	CompartmentID string
+	// TransportMutator modifies the underpinning transport during the construction of APIClientv2
+	TransportMutator func(t http.RoundTripper) http.RoundTripper
 }
 
 func (op *Provider) APIClientv2() *clientv2.Fn {
 	runtime := openapi.New(op.FnApiUrl.Host, path.Join(op.FnApiUrl.Path, clientv2.DefaultBasePath), []string{op.FnApiUrl.Scheme})
+	if op.TransportMutator != nil {
+		runtime.Transport = op.TransportMutator(runtime.Transport)
+	}
 	runtime.Transport = op.WrapCallTransport(runtime.Transport)
 	return clientv2.New(runtime, strfmt.Default)
 }
