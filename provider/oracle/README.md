@@ -32,3 +32,14 @@ With the provider set to `oracle-ip`, and the CLI hosted on an OCI instance, the
 
 For the Instance Principal provider, the instance must be in a dynamic group that has been granted the rights to
 use and/or manage functions, as well as their associated resources.
+
+With the provider set to `oracle-cs`, and the CLI running on an OCI Cloudshell machine, the following settings apply:
+
+The provider can read most of it's settings from the [OCI CLI configuration file](https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/sdkconfig.htm): (/etc/oci/config)
+
+|  Key               | Example      |  Required | Read from OCI CLI Config | Description |
+| -------------------|  ----------- |  -----    | ----- |  ---- |  
+| `api-url` | https://api.faas.us-ashburn-1.oraclecloud.com/ | No | No | The API endpoint to contact for accessing the service API. If unset, it will construct a local endpoint from the region in the default region OCI CLI profile |
+| `call-url` | https://r.faas.us-ashburn-1.oraclecloud.com/  | No | No | The call endpoint  base URL for calling functions |
+| `oracle.compartment-id` | ocid1.compartment.oc1..aaaaaaaajvunnz..... | No | No | The compartment OCID for the functions tenancy - this corresponds to where you want functions objects to exist in OCI. It defaults to the root tenancy compartment |
+| `oracle.disable-certs` |`true`| No | No | Ignore SSL host name checks when contacting the server (should only be used for diagnosis and testing) |
