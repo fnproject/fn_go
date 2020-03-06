@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"time"
 
@@ -32,6 +33,9 @@ const (
 	OCI_CLI_TENANCY_ENV_VAR               = "OCI_CLI_TENANCY"
 	OCI_CLI_CONFIG_FILE_ENV_VAR           = "OCI_CLI_CONFIG_FILE"
 	OCI_CLI_DELEGATION_TOKEN_FILE_ENV_VAR = "OCI_CLI_DELEGATION_TOKEN_FILE"
+	OCI_CLI_USER_ENV_VAR                  = "OCI_CLI_USER"
+	OCI_CLI_FINGERPRINT_ENV_VAR           = "OCI_CLI_FINGERPRINT"
+	OCI_CLI_KEY_FILE_ENV_VAR              = "OCI_CLI_KEY_FILE"
 )
 
 type Response struct {
@@ -192,4 +196,12 @@ func (op *OracleProvider) WrapCallTransport(roundTripper http.RoundTripper) http
 	}
 
 	return signingRoundTripper
+}
+
+func getEnv(key, fallback string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		value = fallback
+	}
+	return value
 }
