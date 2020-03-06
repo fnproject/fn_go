@@ -12,7 +12,7 @@ import (
 func main() {
 
 	config := provider.NewConfigSourceFromMap(map[string]string{
-		"api-url": "http://localhosty:8080",
+		"api-url": "http://localhost:8080",
 	})
 
 	currentProvider, err := fn_go.DefaultProviders.ProviderFromConfig("default", config, &provider.NopPassPhraseSource{})
