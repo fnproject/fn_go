@@ -32,14 +32,14 @@ github.com/go-openapi/swag
 # github.com/go-openapi/validate v0.0.0-20180502213133-9286f6d0e5c1
 github.com/go-openapi/validate
 # github.com/mailru/easyjson v0.0.0-20180323154445-8b799c424f57
+github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
-github.com/mailru/easyjson/buffer
 # github.com/mitchellh/go-homedir v0.0.0-20180523094522-3864e76763d9
 github.com/mitchellh/go-homedir
 # github.com/mitchellh/mapstructure v0.0.0-20180511142126-bb74f1db0675
 github.com/mitchellh/mapstructure
-# github.com/oracle/oci-go-sdk v1.5.0
+# github.com/oracle/oci-go-sdk v15.8.0+incompatible
 github.com/oracle/oci-go-sdk/common
 github.com/oracle/oci-go-sdk/common/auth
 # golang.org/x/crypto v0.0.0-20180527072434-ab813273cd59
@@ -52,11 +52,11 @@ golang.org/x/net/idna
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 # golang.org/x/text v0.3.0
+golang.org/x/text/secure/bidirule
+golang.org/x/text/transform
+golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
 golang.org/x/text/width
-golang.org/x/text/secure/bidirule
-golang.org/x/text/unicode/bidi
-golang.org/x/text/transform
 # gopkg.in/mgo.v2 v2.0.0-20160818020120-3f83fa500528
 gopkg.in/mgo.v2/bson
 gopkg.in/mgo.v2/internal/json
