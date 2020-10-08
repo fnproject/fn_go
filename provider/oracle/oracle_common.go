@@ -210,7 +210,10 @@ func getEnv(key, fallback string) string {
 
 // Retrieve second-level domain for the current realm from IMDS
 func GetRealmDomain() (string, error) {
-	resp, err := http.DefaultClient.Get(realmDomainMetadata)
+	client := &http.Client{
+		Timeout: time.Second * 10,
+	}
+	resp, err := client.Get(realmDomainMetadata)
 	if err != nil {
 		return "", fmt.Errorf("problem fetching realm domain from metadata endpoint %s", err)
 	}
