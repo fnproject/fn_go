@@ -39,9 +39,9 @@ github.com/mailru/easyjson/jwriter
 github.com/mitchellh/go-homedir
 # github.com/mitchellh/mapstructure v0.0.0-20180511142126-bb74f1db0675
 github.com/mitchellh/mapstructure
-# github.com/oracle/oci-go-sdk v15.8.0+incompatible
-github.com/oracle/oci-go-sdk/common
-github.com/oracle/oci-go-sdk/common/auth
+# github.com/oracle/oci-go-sdk/v27 v27.3.0
+github.com/oracle/oci-go-sdk/v27/common
+github.com/oracle/oci-go-sdk/v27/common/auth
 # golang.org/x/crypto v0.0.0-20180527072434-ab813273cd59
 golang.org/x/crypto/ssh/terminal
 # golang.org/x/net v0.0.0-20180524181706-dfa909b99c79
