@@ -10,7 +10,7 @@ import (
 
 	"github.com/fnproject/fn_go/provider"
 	homedir "github.com/mitchellh/go-homedir"
-	oci "github.com/oracle/oci-go-sdk/v27/common"
+	oci "github.com/oracle/oci-go-sdk/v28/common"
 )
 
 const (

@@ -7,8 +7,8 @@ import (
 	"os"
 
 	"github.com/fnproject/fn_go/provider"
-	oci "github.com/oracle/oci-go-sdk/v27/common"
-	"github.com/oracle/oci-go-sdk/v27/common/auth"
+	oci "github.com/oracle/oci-go-sdk/v28/common"
+	"github.com/oracle/oci-go-sdk/v28/common/auth"
 )
 
 const (

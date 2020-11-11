@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/oracle/oci-go-sdk/v27/common"
-	"github.com/oracle/oci-go-sdk/v27/common/auth"
+	"github.com/oracle/oci-go-sdk/v28/common"
+	"github.com/oracle/oci-go-sdk/v28/common/auth"
 
 	"github.com/fnproject/fn_go/provider"
 )
