@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fnproject/fn_go/clientv2/apps"
 	"github.com/fnproject/fn_go/modelsv2"
+	"github.com/fnproject/fn_go/provider/oracle/shim/client"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 	"github.com/oracle/oci-go-sdk/v28/functions"
@@ -15,13 +16,13 @@ const (
 )
 
 type AppsShim struct {
-	ociClient     functions.FunctionsManagementClient
+	ociClient     client.FunctionsManagementClient
 	compartmentId string
 }
 
 var _ apps.ClientService = &AppsShim{}
 
-func NewAppsShim(ociClient functions.FunctionsManagementClient, compartmentId string) *AppsShim {
+func NewAppsShim(ociClient client.FunctionsManagementClient, compartmentId string) *AppsShim {
 	return &AppsShim{ociClient: ociClient, compartmentId: compartmentId}
 }
 
