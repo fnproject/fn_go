@@ -4,11 +4,12 @@ import (
 	"crypto/rsa"
 	"crypto/tls"
 	"fmt"
+	"github.com/fnproject/fn_go/provider/oracle/shim"
+	"github.com/oracle/oci-go-sdk/v28/functions"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
-	"path"
 	"time"
 
 	"github.com/fnproject/fn_go/client/version"
@@ -67,6 +68,8 @@ type OracleProvider struct {
 
 	// CompartmentID is the ocid of the functions compartment ID for a given function
 	CompartmentID string
+
+	ociClient functions.FunctionsManagementClient
 }
 
 //-- Provider interface impl ----------------------------------------------------------------------------------
@@ -165,10 +168,10 @@ func InsecureRoundTripper(roundTripper http.RoundTripper) http.RoundTripper {
 //-- Provider interface impl ----------------------------------------------------------------------------------
 
 func (op *OracleProvider) APIClientv2() *clientv2.Fn {
-	runtime := openapi.New(op.FnApiUrl.Host, path.Join(op.FnApiUrl.Path, clientv2.DefaultBasePath),
-		[]string{op.FnApiUrl.Scheme})
-	runtime.Transport = op.WrapCallTransport(runtime.Transport)
-	return clientv2.New(runtime, strfmt.Default)
+	// TODO: respect disablecerts
+	return &clientv2.Fn{
+		Apps: shim.NewAppsShim(op.ociClient, op.CompartmentID),
+	}
 }
 
 func (op *OracleProvider) APIURL() *url.URL {
