@@ -15,18 +15,18 @@ const (
 	annotationSubnet        = "oracle.com/oci/subnetIds"
 )
 
-type AppsShim struct {
+type appsShim struct {
 	ociClient     client.FunctionsManagementClient
 	compartmentId string
 }
 
-var _ apps.ClientService = &AppsShim{}
+var _ apps.ClientService = &appsShim{}
 
-func NewAppsShim(ociClient client.FunctionsManagementClient, compartmentId string) *AppsShim {
-	return &AppsShim{ociClient: ociClient, compartmentId: compartmentId}
+func NewAppsShim(ociClient client.FunctionsManagementClient, compartmentId string) apps.ClientService {
+	return &appsShim{ociClient: ociClient, compartmentId: compartmentId}
 }
 
-func (s *AppsShim) CreateApp(params *apps.CreateAppParams) (*apps.CreateAppOK, error) {
+func (s *appsShim) CreateApp(params *apps.CreateAppParams) (*apps.CreateAppOK, error) {
 	subnetIds, err := parseSubnetIds(params.Body.Annotations)
 	if err != nil {
 		return nil, err
@@ -52,7 +52,7 @@ func (s *AppsShim) CreateApp(params *apps.CreateAppParams) (*apps.CreateAppOK, e
 	}, nil
 }
 
-func (s *AppsShim) DeleteApp(params *apps.DeleteAppParams) (*apps.DeleteAppNoContent, error) {
+func (s *appsShim) DeleteApp(params *apps.DeleteAppParams) (*apps.DeleteAppNoContent, error) {
 	req := functions.DeleteApplicationRequest{ApplicationId: &params.AppID}
 
 	_, err := s.ociClient.DeleteApplication(params.Context, req)
@@ -63,7 +63,7 @@ func (s *AppsShim) DeleteApp(params *apps.DeleteAppParams) (*apps.DeleteAppNoCon
 	return &apps.DeleteAppNoContent{}, nil
 }
 
-func (s *AppsShim) GetApp(params *apps.GetAppParams) (*apps.GetAppOK, error) {
+func (s *appsShim) GetApp(params *apps.GetAppParams) (*apps.GetAppOK, error) {
 	req := functions.GetApplicationRequest{ApplicationId: &params.AppID}
 
 	res, err := s.ociClient.GetApplication(params.Context, req)
@@ -76,7 +76,7 @@ func (s *AppsShim) GetApp(params *apps.GetAppParams) (*apps.GetAppOK, error) {
 	}, nil
 }
 
-func (s *AppsShim) ListApps(params *apps.ListAppsParams) (*apps.ListAppsOK, error) {
+func (s *appsShim) ListApps(params *apps.ListAppsParams) (*apps.ListAppsOK, error) {
 	var limit *int
 	if params.PerPage != nil {
 		ppInt := int(*params.PerPage)
@@ -136,7 +136,7 @@ func (s *AppsShim) ListApps(params *apps.ListAppsParams) (*apps.ListAppsOK, erro
 	}, nil
 }
 
-func (s *AppsShim) UpdateApp(params *apps.UpdateAppParams) (*apps.UpdateAppOK, error) {
+func (s *appsShim) UpdateApp(params *apps.UpdateAppParams) (*apps.UpdateAppOK, error) {
 	var etag *string
 
 	// We can respect 'omitempty' here - only do get-and-merge on config if present
@@ -175,7 +175,7 @@ func (s *AppsShim) UpdateApp(params *apps.UpdateAppParams) (*apps.UpdateAppOK, e
 	}, nil
 }
 
-func (s *AppsShim) SetTransport(transport runtime.ClientTransport) {
+func (s *appsShim) SetTransport(transport runtime.ClientTransport) {
 	// TODO: decide what to do here
 	panic("implement me")
 }
