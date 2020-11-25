@@ -11,8 +11,7 @@ import (
 )
 
 const (
-	annotationCompartmentId = "oracle.com/oci/compartmentId"
-	annotationSubnet        = "oracle.com/oci/subnetIds"
+	annotationSubnet = "oracle.com/oci/subnetIds"
 )
 
 type appsShim struct {
@@ -94,7 +93,8 @@ func (s *appsShim) ListApps(params *apps.ListAppsParams) (*apps.ListAppsOK, erro
 
 	var applicationSummaries []functions.ApplicationSummary
 
-	for res, err := s.ociClient.ListApplications(params.Context, req); ; res, err = s.ociClient.ListApplications(params.Context, req) {
+	for {
+		res, err := s.ociClient.ListApplications(params.Context, req)
 		if err != nil {
 			return nil, err
 		}
@@ -175,10 +175,7 @@ func (s *appsShim) UpdateApp(params *apps.UpdateAppParams) (*apps.UpdateAppOK, e
 	}, nil
 }
 
-func (s *appsShim) SetTransport(transport runtime.ClientTransport) {
-	// TODO: decide what to do here
-	panic("implement me")
-}
+func (*appsShim) SetTransport(runtime.ClientTransport) {}
 
 func parseSubnetIds(annotations map[string]interface{}) ([]string, error) {
 	if annotations == nil || len(annotations) == 0 {
