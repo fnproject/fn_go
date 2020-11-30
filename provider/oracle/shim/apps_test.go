@@ -111,10 +111,10 @@ func TestListAppsMultiplePages(t *testing.T) {
 	}
 	assert.Len(t, results, 9)
 	app := results[0]
+	assert.Equal(t, compartmentId, app.Annotations[annotationCompartmentId])
 	assert.NotEmpty(t, app.ID)
 	assert.NotEmpty(t, app.Name)
 	assert.NotEmpty(t, app.Annotations[annotationSubnet])
-	assert.NotEmpty(t, app.Annotations[annotationCompartmentId])
 	assert.NotEmpty(t, app.CreatedAt)
 	assert.NotEmpty(t, app.UpdatedAt)
 }
@@ -141,7 +141,7 @@ func TestListAppsGetByName(t *testing.T) {
 	assert.NotEmpty(t, app.SyslogURL)
 }
 
-func TestUpdateApp(t *testing.T) {
+func TestUpdateAppConfig(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -172,21 +172,31 @@ func TestUpdateApp(t *testing.T) {
 	assert.Equal(t, expectedConfig, result.Config)
 	// Check we haven't inadvertently changed syslogUrl
 	assert.Equal(t, "OriginalApplicationSyslogUrl", *result.SyslogURL)
+}
+
+func TestUpdateAppSyslogUrl(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	c := client.NewMockFunctionsManagementClientBasic(ctrl)
+	compartmentId := "UpdateAppCompartment"
+	shim := NewAppsShim(c, compartmentId)
 
 	// Test syslogUrl update
 	syslogUrl := "UpdatedApplicationSyslogUrl"
-	app = modelsv2.App{
+	app := modelsv2.App{
 		SyslogURL: &syslogUrl,
 	}
-	updateAppOK, err = shim.UpdateApp(&apps.UpdateAppParams{
+	appId := "UpdateAppId"
+	updateAppOK, err := shim.UpdateApp(&apps.UpdateAppParams{
 		AppID: appId,
 		Body:  &app,
 	})
 	assert.NoError(t, err)
 
-	result = updateAppOK.GetPayload()
+	result := updateAppOK.GetPayload()
 	// Check we haven't inadvertently changed config
-	expectedConfig = map[string]string{
+	expectedConfig := map[string]string{
 		"UpdateApplicationKey1": "UpdateApplicationValue1",
 		"UpdateApplicationKey2": "UpdateApplicationValue2",
 	}

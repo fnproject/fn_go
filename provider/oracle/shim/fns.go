@@ -171,13 +171,18 @@ func (s *fnsShim) UpdateFn(params *fns.UpdateFnParams) (*fns.UpdateFnOK, error) 
 		memoryPtr = &memory
 	}
 
+	var imagePtr *string
+	if params.Body.Image != "" {
+		imagePtr = &params.Body.Image
+	}
+
 	digest, err := parseDigestAnnotation(params.Body.Annotations)
 	if err != nil {
 		return nil, err
 	}
 
 	details := functions.UpdateFunctionDetails{
-		Image:            &params.Body.Image,
+		Image:            imagePtr,
 		ImageDigest:      digest,
 		MemoryInMBs:      memoryPtr,
 		Config:           params.Body.Config,
