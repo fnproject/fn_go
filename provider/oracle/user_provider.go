@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/oracle/oci-go-sdk/v28/functions"
 	"io/ioutil"
+	"net/url"
 	"os"
 	"path/filepath"
 
@@ -23,12 +24,6 @@ const (
 )
 
 func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider.PassPhraseSource) (provider.Provider, error) {
-
-	apiUrl, err := provider.CanonicalFnAPIUrl(configSource.GetString(provider.CfgFnAPIURL))
-	if err != nil {
-		return nil, err
-	}
-
 	configProvider, err := loadOracleConfig(configSource, passphraseSource)
 	if err != nil {
 		return nil, err
@@ -44,7 +39,23 @@ func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider
 		return nil, err
 	}
 
-	ociClient.Host = apiUrl.String()
+	// If we have an explicit api-url configured then use that, otherwise let OCI client compute the url from the standard
+	// production url template and the configured region from environment.
+	cfgApiUrl := configSource.GetString(provider.CfgFnAPIURL)
+	var apiUrl *url.URL
+	if cfgApiUrl != "" {
+		apiUrl, err = provider.CanonicalFnAPIUrl(cfgApiUrl)
+		if err != nil {
+			return nil, err
+		}
+		ociClient.Host = apiUrl.String()
+	} else {
+		// Even if URL is computed by OCI SDK itself, we still populate FnApiUrl in the Provider for compatibility's sake
+		apiUrl, err = provider.CanonicalFnAPIUrl(ociClient.Host)
+		if err != nil {
+			return nil, err
+		}
+	}
 
 	return &OracleProvider{
 		FnApiUrl:      apiUrl,
