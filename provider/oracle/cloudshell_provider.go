@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"fmt"
+	"github.com/oracle/oci-go-sdk/v28/functions"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -90,7 +91,7 @@ func NewCSProvider(configSource provider.ConfigSource, passphraseSource provider
 	// Set OCI SDK to use IMDS to fetch region info (second-level domain etc.)
 	oci.EnableInstanceMetadataServiceLookup()
 
-	provider, err := auth.InstancePrincipalConfigurationProvider()
+	configProvider, err := auth.InstancePrincipalDelegationTokenConfigurationProvider(&csConfig.delegationToken)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +104,14 @@ func NewCSProvider(configSource provider.ConfigSource, passphraseSource provider
 
 	// Obo token will also be signed
 	defaultHeaders := append(oci.DefaultGenericHeaders(), requestHeaderOpcOboToken)
-	signer := oci.RequestSigner(provider, defaultHeaders, oci.DefaultBodyHeaders())
+	signer := oci.RequestSigner(configProvider, defaultHeaders, oci.DefaultBodyHeaders())
+
+	ociClient, err := functions.NewFunctionsManagementClientWithConfigurationProvider(configProvider)
+	if err != nil {
+		return nil, err
+	}
+
+	ociClient.Host = apiUrl.String()
 
 	return &OracleProvider{
 		FnApiUrl:      apiUrl,
@@ -111,6 +119,7 @@ func NewCSProvider(configSource provider.ConfigSource, passphraseSource provider
 		Interceptor:   interceptor,
 		DisableCerts:  configSource.GetBool(CfgDisableCerts),
 		CompartmentID: compartmentID,
+		ociClient:     ociClient,
 	}, nil
 }
 
