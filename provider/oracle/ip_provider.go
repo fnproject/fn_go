@@ -41,6 +41,8 @@ func NewIPProvider(configSource provider.ConfigSource, passphraseSource provider
 		return nil, err
 	}
 
+	ociClient.UserAgent = fmt.Sprintf("%s %s", userAgentPrefixIp, ociClient.UserAgent)
+
 	disableCerts := configSource.GetBool(CfgDisableCerts)
 	if disableCerts {
 		c := ociClient.HTTPClient.(*http.Client)

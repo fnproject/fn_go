@@ -46,6 +46,8 @@ func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider
 		c.Transport = InsecureRoundTripper(c.Transport)
 	}
 
+	ociClient.UserAgent = fmt.Sprintf("%s %s", userAgentPrefixUser, ociClient.UserAgent)
+
 	// If we have an explicit api-url configured then use that, otherwise let OCI client compute the url from the standard
 	// production url template and the configured region from environment.
 	cfgApiUrl := configSource.GetString(provider.CfgFnAPIURL)

@@ -38,6 +38,10 @@ const (
 	OCI_CLI_USER_ENV_VAR                  = "OCI_CLI_USER"
 	OCI_CLI_FINGERPRINT_ENV_VAR           = "OCI_CLI_FINGERPRINT"
 	OCI_CLI_KEY_FILE_ENV_VAR              = "OCI_CLI_KEY_FILE"
+
+	userAgentPrefixUser = "fn_go-oracle"
+	userAgentPrefixIp   = "fn_go-oracle-ip"
+	userAgentPrefixCs   = "fn_go-oracle-cs"
 )
 
 type Response struct {

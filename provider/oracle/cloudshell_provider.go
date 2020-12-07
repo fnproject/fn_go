@@ -111,6 +111,8 @@ func NewCSProvider(configSource provider.ConfigSource, passphraseSource provider
 		return nil, err
 	}
 
+	ociClient.UserAgent = fmt.Sprintf("%s %s", userAgentPrefixCs, ociClient.UserAgent)
+
 	disableCerts := configSource.GetBool(CfgDisableCerts)
 	if disableCerts {
 		c := ociClient.HTTPClient.(*http.Client)
