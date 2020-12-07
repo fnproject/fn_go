@@ -52,7 +52,7 @@ func (s *fnsShim) CreateFn(params *fns.CreateFnParams) (*fns.CreateFnOK, error) 
 
 	req := functions.CreateFunctionRequest{CreateFunctionDetails: details}
 
-	res, err := s.ociClient.CreateFunction(params.Context, req)
+	res, err := s.ociClient.CreateFunction(ctxOrBackground(params.Context), req)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (s *fnsShim) CreateFn(params *fns.CreateFnParams) (*fns.CreateFnOK, error) 
 func (s *fnsShim) DeleteFn(params *fns.DeleteFnParams) (*fns.DeleteFnNoContent, error) {
 	req := functions.DeleteFunctionRequest{FunctionId: &params.FnID}
 
-	_, err := s.ociClient.DeleteFunction(params.Context, req)
+	_, err := s.ociClient.DeleteFunction(ctxOrBackground(params.Context), req)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (s *fnsShim) DeleteFn(params *fns.DeleteFnParams) (*fns.DeleteFnNoContent, 
 func (s *fnsShim) GetFn(params *fns.GetFnParams) (*fns.GetFnOK, error) {
 	req := functions.GetFunctionRequest{FunctionId: &params.FnID}
 
-	res, err := s.ociClient.GetFunction(params.Context, req)
+	res, err := s.ociClient.GetFunction(ctxOrBackground(params.Context), req)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (s *fnsShim) ListFns(params *fns.ListFnsParams) (*fns.ListFnsOK, error) {
 	var functionSummaries []functions.FunctionSummary
 
 	for {
-		res, err := s.ociClient.ListFunctions(params.Context, req)
+		res, err := s.ociClient.ListFunctions(ctxOrBackground(params.Context), req)
 		if err != nil {
 			return nil, err
 		}
@@ -125,7 +125,7 @@ func (s *fnsShim) ListFns(params *fns.ListFnsParams) (*fns.ListFnsOK, error) {
 	if params.Name != nil && len(functionSummaries) == 1 {
 		getFnOK, err := s.GetFn(&fns.GetFnParams{
 			FnID:    *functionSummaries[0].Id,
-			Context: params.Context,
+			Context: ctxOrBackground(params.Context),
 		})
 		if err != nil {
 			return nil, err
@@ -153,7 +153,7 @@ func (s *fnsShim) UpdateFn(params *fns.UpdateFnParams) (*fns.UpdateFnOK, error) 
 		// Get the current version of the Fn so that we can merge config
 		req := functions.GetFunctionRequest{FunctionId: &params.FnID}
 
-		res, err := s.ociClient.GetFunction(params.Context, req)
+		res, err := s.ociClient.GetFunction(ctxOrBackground(params.Context), req)
 		if err != nil {
 			return nil, err
 		}
@@ -193,7 +193,7 @@ func (s *fnsShim) UpdateFn(params *fns.UpdateFnParams) (*fns.UpdateFnOK, error) 
 		IfMatch:               etag,
 	}
 
-	res, err := s.ociClient.UpdateFunction(params.Context, req)
+	res, err := s.ociClient.UpdateFunction(ctxOrBackground(params.Context), req)
 	if err != nil {
 		return nil, err
 	}

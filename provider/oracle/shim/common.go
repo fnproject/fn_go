@@ -1,5 +1,7 @@
 package shim
 
+import "context"
+
 const annotationCompartmentId = "oracle.com/oci/compartmentId"
 
 // OCI update config is wholesale replacement of the map. Here we do the FnV2 server-side merge on the client instead.
@@ -18,4 +20,12 @@ func mergeConfig(oldConfig map[string]string, changeConfig map[string]string) ma
 		}
 	}
 	return oldConfig
+}
+
+// Helper func to convert nil context to context.Background
+func ctxOrBackground(ctx context.Context) context.Context {
+	if ctx == nil {
+		return context.Background()
+	}
+	return ctx
 }

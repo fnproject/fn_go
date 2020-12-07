@@ -41,7 +41,7 @@ func (s *appsShim) CreateApp(params *apps.CreateAppParams) (*apps.CreateAppOK, e
 
 	req := functions.CreateApplicationRequest{CreateApplicationDetails: details}
 
-	res, err := s.ociClient.CreateApplication(params.Context, req)
+	res, err := s.ociClient.CreateApplication(ctxOrBackground(params.Context), req)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (s *appsShim) CreateApp(params *apps.CreateAppParams) (*apps.CreateAppOK, e
 func (s *appsShim) DeleteApp(params *apps.DeleteAppParams) (*apps.DeleteAppNoContent, error) {
 	req := functions.DeleteApplicationRequest{ApplicationId: &params.AppID}
 
-	_, err := s.ociClient.DeleteApplication(params.Context, req)
+	_, err := s.ociClient.DeleteApplication(ctxOrBackground(params.Context), req)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (s *appsShim) DeleteApp(params *apps.DeleteAppParams) (*apps.DeleteAppNoCon
 func (s *appsShim) GetApp(params *apps.GetAppParams) (*apps.GetAppOK, error) {
 	req := functions.GetApplicationRequest{ApplicationId: &params.AppID}
 
-	res, err := s.ociClient.GetApplication(params.Context, req)
+	res, err := s.ociClient.GetApplication(ctxOrBackground(params.Context), req)
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +92,7 @@ func (s *appsShim) ListApps(params *apps.ListAppsParams) (*apps.ListAppsOK, erro
 	var applicationSummaries []functions.ApplicationSummary
 
 	for {
-		res, err := s.ociClient.ListApplications(params.Context, req)
+		res, err := s.ociClient.ListApplications(ctxOrBackground(params.Context), req)
 		if err != nil {
 			return nil, err
 		}
@@ -114,7 +114,7 @@ func (s *appsShim) ListApps(params *apps.ListAppsParams) (*apps.ListAppsOK, erro
 	if params.Name != nil && len(applicationSummaries) == 1 {
 		getAppOK, err := s.GetApp(&apps.GetAppParams{
 			AppID:   *applicationSummaries[0].Id,
-			Context: params.Context,
+			Context: ctxOrBackground(params.Context),
 		})
 		if err != nil {
 			return nil, err
@@ -142,7 +142,7 @@ func (s *appsShim) UpdateApp(params *apps.UpdateAppParams) (*apps.UpdateAppOK, e
 		// Get the current version of the App so that we can merge config
 		req := functions.GetApplicationRequest{ApplicationId: &params.AppID}
 
-		res, err := s.ociClient.GetApplication(params.Context, req)
+		res, err := s.ociClient.GetApplication(ctxOrBackground(params.Context), req)
 		if err != nil {
 			return nil, err
 		}
@@ -163,7 +163,7 @@ func (s *appsShim) UpdateApp(params *apps.UpdateAppParams) (*apps.UpdateAppOK, e
 		IfMatch:                  etag,
 	}
 
-	res, err := s.ociClient.UpdateApplication(params.Context, req)
+	res, err := s.ociClient.UpdateApplication(ctxOrBackground(params.Context), req)
 	if err != nil {
 		return nil, err
 	}
