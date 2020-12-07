@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/oracle/oci-go-sdk/v28/functions"
 	"io/ioutil"
+	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -39,6 +40,12 @@ func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider
 		return nil, err
 	}
 
+	disableCerts := configSource.GetBool(CfgDisableCerts)
+	if disableCerts {
+		c := ociClient.HTTPClient.(*http.Client)
+		c.Transport = InsecureRoundTripper(c.Transport)
+	}
+
 	// If we have an explicit api-url configured then use that, otherwise let OCI client compute the url from the standard
 	// production url template and the configured region from environment.
 	cfgApiUrl := configSource.GetString(provider.CfgFnAPIURL)
@@ -61,7 +68,7 @@ func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider
 		FnApiUrl:      apiUrl,
 		Signer:        oci.DefaultRequestSigner(configProvider),
 		Interceptor:   nil,
-		DisableCerts:  configSource.GetBool(CfgDisableCerts),
+		DisableCerts:  disableCerts,
 		CompartmentID: compartmentID,
 		ociClient:     ociClient,
 	}, nil

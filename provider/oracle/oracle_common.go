@@ -168,7 +168,6 @@ func InsecureRoundTripper(roundTripper http.RoundTripper) http.RoundTripper {
 //-- Provider interface impl ----------------------------------------------------------------------------------
 
 func (op *OracleProvider) APIClientv2() *clientv2.Fn {
-	// TODO: respect disablecerts
 	return &clientv2.Fn{
 		Apps:     shim.NewAppsShim(op.ociClient, op.CompartmentID),
 		Fns:      shim.NewFnsShim(op.ociClient),

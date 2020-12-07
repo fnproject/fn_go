@@ -111,13 +111,19 @@ func NewCSProvider(configSource provider.ConfigSource, passphraseSource provider
 		return nil, err
 	}
 
+	disableCerts := configSource.GetBool(CfgDisableCerts)
+	if disableCerts {
+		c := ociClient.HTTPClient.(*http.Client)
+		c.Transport = InsecureRoundTripper(c.Transport)
+	}
+
 	ociClient.Host = apiUrl.String()
 
 	return &OracleProvider{
 		FnApiUrl:      apiUrl,
 		Signer:        signer,
 		Interceptor:   interceptor,
-		DisableCerts:  configSource.GetBool(CfgDisableCerts),
+		DisableCerts:  disableCerts,
 		CompartmentID: compartmentID,
 		ociClient:     ociClient,
 	}, nil
