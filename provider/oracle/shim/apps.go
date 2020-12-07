@@ -82,8 +82,6 @@ func (s *appsShim) ListApps(params *apps.ListAppsParams) (*apps.ListAppsOK, erro
 		limit = &ppInt
 	}
 
-	// TODO: figure out if paging behaviour is actually right here (perPage vs limit)
-
 	req := functions.ListApplicationsRequest{
 		CompartmentId: &s.compartmentId,
 		Limit:         limit,

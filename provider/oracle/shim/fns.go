@@ -93,8 +93,6 @@ func (s *fnsShim) ListFns(params *fns.ListFnsParams) (*fns.ListFnsOK, error) {
 		limit = &ppInt
 	}
 
-	// TODO: figure out if paging behaviour is actually right here (perPage vs limit)
-
 	req := functions.ListFunctionsRequest{
 		ApplicationId: params.AppID,
 		Limit:         limit,

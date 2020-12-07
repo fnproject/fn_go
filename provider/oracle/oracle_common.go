@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"crypto/rsa"
 	"crypto/tls"
 	"fmt"
 	"github.com/fnproject/fn_go/provider/oracle/shim"
@@ -73,19 +72,6 @@ type OracleProvider struct {
 }
 
 //-- Provider interface impl ----------------------------------------------------------------------------------
-
-type ociKeyProvider struct {
-	ID  string
-	key *rsa.PrivateKey
-}
-
-func (kp ociKeyProvider) PrivateRSAKey() (*rsa.PrivateKey, error) {
-	return kp.key, nil
-}
-
-func (kp ociKeyProvider) KeyID() (string, error) {
-	return kp.ID, nil
-}
 
 type ociSigningRoundTripper struct {
 	signer        common.HTTPRequestSigner
