@@ -121,7 +121,7 @@ func (s *fnsShim) ListFns(params *fns.ListFnsParams) (*fns.ListFnsOK, error) {
 
 	// Consumers such as Fn CLI expect to get 'config' when doing a filter-by-name
 	// Given FunctionSummary doesn't have these fields, we do a follow-up GetFn to get the full Function entity
-	// TODO: possibly optimise Fn CLI usage of this somehow so it's only used where necessary - variable in ctx?
+	// We could possibly optimise Fn CLI usage of this somehow so it's only used where necessary (variable in ctx?)
 	if params.Name != nil && len(functionSummaries) == 1 {
 		getFnOK, err := s.GetFn(&fns.GetFnParams{
 			FnID:    *functionSummaries[0].Id,

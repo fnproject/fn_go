@@ -110,7 +110,7 @@ func (s *appsShim) ListApps(params *apps.ListAppsParams) (*apps.ListAppsOK, erro
 
 	// Consumers such as Fn CLI expect to get 'config' and 'syslogUrl' when doing a filter-by-name
 	// Given ApplicationSummary doesn't have these fields, we do a follow-up GetApp to get the full Application entity
-	// TODO: possibly optimise Fn CLI usage of this somehow so it's only used where necessary - variable in ctx?
+	// We could possibly optimise Fn CLI usage of this somehow so it's only used where necessary (variable in ctx?)
 	if params.Name != nil && len(applicationSummaries) == 1 {
 		getAppOK, err := s.GetApp(&apps.GetAppParams{
 			AppID:   *applicationSummaries[0].Id,
