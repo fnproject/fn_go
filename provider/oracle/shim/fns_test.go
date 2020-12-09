@@ -287,3 +287,26 @@ func TestUpdateFnImage(t *testing.T) {
 	assert.Equal(t, uint64(128), result.Memory)
 	assert.Equal(t, int32(30), *result.Timeout)
 }
+
+func TestUpdateFnBlankDigest(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	c := client.NewMockFunctionsManagementClientBasic(ctrl)
+	shim := NewFnsShim(c)
+
+	fn := modelsv2.Fn{
+		Annotations: map[string]interface{}{
+			annotationImageDigest: "",
+		},
+	}
+
+	fnId := "UpdateFnId"
+	updateFnOK, err := shim.UpdateFn(&fns.UpdateFnParams{
+		FnID: fnId,
+		Body: &fn,
+	})
+	assert.NoError(t, err)
+	result := updateFnOK.GetPayload()
+	assert.NotEmpty(t, result.Annotations[annotationImageDigest])
+}
