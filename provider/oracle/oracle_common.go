@@ -4,7 +4,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/fnproject/fn_go/provider/oracle/shim"
-	"github.com/oracle/oci-go-sdk/v28/functions"
+	"github.com/oracle/oci-go-sdk/v48/functions"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -16,7 +16,7 @@ import (
 	"github.com/fnproject/fn_go/provider"
 	openapi "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-	"github.com/oracle/oci-go-sdk/v28/common"
+	"github.com/oracle/oci-go-sdk/v48/common"
 )
 
 const (
