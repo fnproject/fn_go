@@ -72,6 +72,9 @@ type OracleProvider struct {
 	// CompartmentID is the ocid of the functions compartment ID for a given function
 	CompartmentID string
 
+	// ConfigurationProvider is the OCI configuration provider for signing requests
+	ConfigurationProvider common.ConfigurationProvider
+
 	ociClient functions.FunctionsManagementClient
 }
 

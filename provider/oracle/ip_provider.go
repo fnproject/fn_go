@@ -68,11 +68,12 @@ func NewIPProvider(configSource provider.ConfigSource, passphraseSource provider
 	}
 
 	return &OracleProvider{
-		FnApiUrl:      apiUrl,
-		Signer:        common.DefaultRequestSigner(configProvider),
-		Interceptor:   nil,
-		DisableCerts:  disableCerts,
-		CompartmentID: compartmentID,
-		ociClient:     ociClient,
+		FnApiUrl:              apiUrl,
+		Signer:                common.DefaultRequestSigner(configProvider),
+		Interceptor:           nil,
+		DisableCerts:          disableCerts,
+		CompartmentID:         compartmentID,
+		ConfigurationProvider: configProvider,
+		ociClient:             ociClient,
 	}, nil
 }

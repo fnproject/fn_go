@@ -122,12 +122,13 @@ func NewCSProvider(configSource provider.ConfigSource, passphraseSource provider
 	ociClient.Host = apiUrl.String()
 
 	return &OracleProvider{
-		FnApiUrl:      apiUrl,
-		Signer:        signer,
-		Interceptor:   interceptor,
-		DisableCerts:  disableCerts,
-		CompartmentID: compartmentID,
-		ociClient:     ociClient,
+		FnApiUrl:              apiUrl,
+		Signer:                signer,
+		Interceptor:           interceptor,
+		DisableCerts:          disableCerts,
+		CompartmentID:         compartmentID,
+		ConfigurationProvider: configProvider,
+		ociClient:             ociClient,
 	}, nil
 }
 
