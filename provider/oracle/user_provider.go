@@ -67,12 +67,13 @@ func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider
 	}
 
 	return &OracleProvider{
-		FnApiUrl:      apiUrl,
-		Signer:        oci.DefaultRequestSigner(configProvider),
-		Interceptor:   nil,
-		DisableCerts:  disableCerts,
-		CompartmentID: compartmentID,
-		ociClient:     ociClient,
+		FnApiUrl:              apiUrl,
+		Signer:                oci.DefaultRequestSigner(configProvider),
+		Interceptor:           nil,
+		DisableCerts:          disableCerts,
+		CompartmentID:         compartmentID,
+		ConfigurationProvider: configProvider,
+		ociClient:             ociClient,
 	}, nil
 }
 

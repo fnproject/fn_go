@@ -159,12 +159,6 @@ github.com/mitchellh/mapstructure v1.3.2/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RR
 github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe/go.mod h1:wL8QJuTMNUDYhXwkmfOly8iTdp5TEcJFWZD2D7SIkUc=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e h1:fD57ERR4JtEqsWbfPhv4DMiApHyliiK5xCTNVSPiaAs=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
-github.com/oracle/oci-go-sdk v1.8.0 h1:4SO45bKV0I3/Mn1os3ANDZmV0eSE5z5CLdSUIkxtyzs=
-github.com/oracle/oci-go-sdk v24.3.0+incompatible h1:x4mcfb4agelf1O4/1/auGlZ1lr97jXRSSN5MxTgG/zU=
-github.com/oracle/oci-go-sdk/v28 v28.0.0 h1:19QPbl+gCbgU3hFGwOS4hRNpM3A+86Xf9mPLdu/wUlk=
-github.com/oracle/oci-go-sdk/v28 v28.0.0/go.mod h1:wpcs8ZqLlnn+SisD7SV959mncC58IZOMKAEM7yUlFPQ=
-github.com/oracle/oci-go-sdk/v47 v47.1.0 h1:oXkuD18OpcE2bsl6AHMJWKcoPcQrsFq7TiNzCuDiRU8=
-github.com/oracle/oci-go-sdk/v47 v47.1.0/go.mod h1:kO/m5/YgYWrCnLqdudqvhKEUxexwGR2hc6Mogu+8QZw=
 github.com/oracle/oci-go-sdk/v48 v48.0.0 h1:ux/bkBFIHOPWhcCxx/c67jTIr/TDGJGRKn5rW6zqy1s=
 github.com/oracle/oci-go-sdk/v48 v48.0.0/go.mod h1:eCa0yXKSofRr/J5fv8pqnxX72yTG2FkbBkL5vC2RXuQ=
 github.com/pborman/uuid v1.2.0/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtPdI/k=
