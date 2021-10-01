@@ -56,9 +56,11 @@ github.com/mitchellh/go-homedir
 github.com/mitchellh/mapstructure
 # github.com/oracle/oci-go-sdk/v28 v28.0.0
 ## explicit
-github.com/oracle/oci-go-sdk/v28/common
-github.com/oracle/oci-go-sdk/v28/common/auth
-github.com/oracle/oci-go-sdk/v28/functions
+# github.com/oracle/oci-go-sdk/v48 v48.0.0
+## explicit
+github.com/oracle/oci-go-sdk/v48/common
+github.com/oracle/oci-go-sdk/v48/common/auth
+github.com/oracle/oci-go-sdk/v48/functions
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
 # github.com/stretchr/testify v1.6.1
