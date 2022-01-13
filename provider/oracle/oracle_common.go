@@ -3,13 +3,14 @@ package oracle
 import (
 	"crypto/tls"
 	"fmt"
-	"github.com/fnproject/fn_go/provider/oracle/shim"
-	"github.com/oracle/oci-go-sdk/v48/functions"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
 	"time"
+
+	"github.com/fnproject/fn_go/provider/oracle/shim"
+	"github.com/oracle/oci-go-sdk/v48/functions"
 
 	"github.com/fnproject/fn_go/client/version"
 	"github.com/fnproject/fn_go/clientv2"
@@ -23,6 +24,7 @@ const (
 	CfgTenancyID                          = "oracle.tenancy-id"
 	CfgProfile                            = "oracle.profile"
 	CfgCompartmentID                      = "oracle.compartment-id"
+	CfgImageCompartmentID                 = "oracle.image-compartment-id"
 	CfgDisableCerts                       = "oracle.disable-certs"
 	CompartmentMetadata                   = "http://169.254.169.254/opc/v1/instance/compartmentId"
 	FunctionsAPIURLTmpl                   = "https://functions.%s.oci.%s"
@@ -71,6 +73,9 @@ type OracleProvider struct {
 
 	// CompartmentID is the ocid of the functions compartment ID for a given function
 	CompartmentID string
+
+	// ImageCompartmentID is the ocid of the functions compartment ID for a given function
+	ImageCompartmentID string
 
 	// ConfigurationProvider is the OCI configuration provider for signing requests
 	ConfigurationProvider common.ConfigurationProvider

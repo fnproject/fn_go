@@ -5,12 +5,13 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"github.com/oracle/oci-go-sdk/v48/functions"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
+
+	"github.com/oracle/oci-go-sdk/v48/functions"
 
 	"github.com/fnproject/fn_go/provider"
 	homedir "github.com/mitchellh/go-homedir"
@@ -72,6 +73,7 @@ func NewFromConfig(configSource provider.ConfigSource, passphraseSource provider
 		Interceptor:           nil,
 		DisableCerts:          disableCerts,
 		CompartmentID:         compartmentID,
+		ImageCompartmentID:    configSource.GetString(CfgImageCompartmentID),
 		ConfigurationProvider: configProvider,
 		ociClient:             ociClient,
 	}, nil
