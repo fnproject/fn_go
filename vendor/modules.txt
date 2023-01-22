@@ -42,6 +42,8 @@ github.com/go-openapi/swag
 github.com/go-openapi/validate
 # github.com/go-stack/stack v1.8.0
 github.com/go-stack/stack
+# github.com/gofrs/flock v0.8.1
+github.com/gofrs/flock
 # github.com/golang/mock v1.4.4
 ## explicit
 github.com/golang/mock/gomock
@@ -54,15 +56,15 @@ github.com/mailru/easyjson/jwriter
 github.com/mitchellh/go-homedir
 # github.com/mitchellh/mapstructure v1.3.2
 github.com/mitchellh/mapstructure
-# github.com/oracle/oci-go-sdk/v28 v28.0.0
+# github.com/oracle/oci-go-sdk/v65 v65.28.1 => /Users/sunny/Functions/oci-go-sdk
 ## explicit
-# github.com/oracle/oci-go-sdk/v48 v48.0.0
-## explicit
-github.com/oracle/oci-go-sdk/v48/common
-github.com/oracle/oci-go-sdk/v48/common/auth
-github.com/oracle/oci-go-sdk/v48/functions
+github.com/oracle/oci-go-sdk/v65/common
+github.com/oracle/oci-go-sdk/v65/common/auth
+github.com/oracle/oci-go-sdk/v65/functions
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
+# github.com/sony/gobreaker v0.5.0
+github.com/sony/gobreaker
 # github.com/stretchr/testify v1.6.1
 ## explicit
 github.com/stretchr/testify/assert
@@ -81,7 +83,7 @@ golang.org/x/crypto/ssh/terminal
 ## explicit
 golang.org/x/net/context
 golang.org/x/net/idna
-# golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f
+# golang.org/x/sys v0.0.0-20220209214540-3681064d5158
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
