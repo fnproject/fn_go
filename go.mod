@@ -10,8 +10,8 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/oracle/oci-go-sdk/v48 v48.0.0
 	github.com/stretchr/testify v1.6.1
-	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
-	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
+	golang.org/x/crypto v0.1.0
+	golang.org/x/net v0.1.0
 )
 
 go 1.14
