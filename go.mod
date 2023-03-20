@@ -14,6 +14,6 @@ require (
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
 )
 
-replace github.com/oracle/oci-go-sdk/v65 v65.28.1 => /Users/sunny/Functions/oci-go-sdk
+replace github.com/oracle/oci-go-sdk/v65 v65.28.1 => /Users/sunny/Functions/oci-go-sdk-preview/oci-go-sdk-preview/oci-go-sdk
 
 go 1.14

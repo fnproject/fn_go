@@ -56,10 +56,11 @@ github.com/mailru/easyjson/jwriter
 github.com/mitchellh/go-homedir
 # github.com/mitchellh/mapstructure v1.3.2
 github.com/mitchellh/mapstructure
-# github.com/oracle/oci-go-sdk/v65 v65.28.1 => /Users/sunny/Functions/oci-go-sdk
+# github.com/oracle/oci-go-sdk/v65 v65.28.1 => /Users/sunny/Functions/oci-go-sdk-preview/oci-go-sdk-preview/oci-go-sdk
 ## explicit
 github.com/oracle/oci-go-sdk/v65/common
 github.com/oracle/oci-go-sdk/v65/common/auth
+github.com/oracle/oci-go-sdk/v65/common/utils
 github.com/oracle/oci-go-sdk/v65/functions
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
@@ -83,7 +84,7 @@ golang.org/x/crypto/ssh/terminal
 ## explicit
 golang.org/x/net/context
 golang.org/x/net/idna
-# golang.org/x/sys v0.0.0-20220209214540-3681064d5158
+# golang.org/x/sys v0.6.0
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
