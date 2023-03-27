@@ -1,5 +1,7 @@
 module github.com/fnproject/fn_go
 
+go 1.17
+
 require (
 	github.com/go-openapi/errors v0.19.8
 	github.com/go-openapi/runtime v0.19.23
@@ -38,5 +40,3 @@ require (
 )
 
 replace github.com/oracle/oci-go-sdk/v65 v65.28.1 => /Users/sunny/Functions/oci-go-sdk-preview/oci-go-sdk-preview/oci-go-sdk
-
-go 1.17
