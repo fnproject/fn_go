@@ -10,13 +10,14 @@ require (
 	github.com/go-openapi/validate v0.19.12
 	github.com/golang/mock v1.4.4
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/oracle/oci-go-sdk/v65 v65.28.1
+	github.com/oracle/oci-go-sdk/v65 v65.41.1
 	github.com/stretchr/testify v1.6.1
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
 )
 
 require (
+	bitbucket.oci.oraclecorp.com/faas/vault-go-sdk v1.1.0 // indirect
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20200428143746-21a406dcc535 // indirect
@@ -30,6 +31,7 @@ require (
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mitchellh/mapstructure v1.3.2 // indirect
+	github.com/oracle/oci-go-sdk/v28 v28.0.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sony/gobreaker v0.5.0 // indirect
 	go.mongodb.org/mongo-driver v1.4.2 // indirect
@@ -38,5 +40,3 @@ require (
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
 )
-
-replace github.com/oracle/oci-go-sdk/v65 v65.28.1 => /Users/sunny/Functions/oci-go-sdk-preview/oci-go-sdk-preview/oci-go-sdk
