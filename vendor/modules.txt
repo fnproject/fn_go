@@ -69,8 +69,6 @@ github.com/mitchellh/go-homedir
 # github.com/mitchellh/mapstructure v1.3.2
 ## explicit; go 1.14
 github.com/mitchellh/mapstructure
-# github.com/oracle/oci-go-sdk/v28 v28.0.0
-## explicit; go 1.13
 # github.com/oracle/oci-go-sdk/v65 v65.41.1
 ## explicit; go 1.13
 github.com/oracle/oci-go-sdk/v65/common
@@ -117,6 +115,6 @@ golang.org/x/text/width
 # gopkg.in/yaml.v2 v2.3.0
 ## explicit
 gopkg.in/yaml.v2
-# gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
+# gopkg.in/yaml.v3 v3.0.0
 ## explicit
 gopkg.in/yaml.v3
