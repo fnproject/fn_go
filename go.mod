@@ -12,8 +12,8 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/oracle/oci-go-sdk/v65 v65.41.1
 	github.com/stretchr/testify v1.6.1
-	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
-	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
+	golang.org/x/crypto v0.19.0
+	golang.org/x/net v0.17.0
 )
 
 require (
@@ -30,12 +30,12 @@ require (
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mitchellh/mapstructure v1.3.2 // indirect
-	github.com/oracle/oci-go-sdk/v28 v28.0.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sony/gobreaker v0.5.0 // indirect
 	go.mongodb.org/mongo-driver v1.4.2 // indirect
-	golang.org/x/sys v0.6.0 // indirect
-	golang.org/x/text v0.3.3 // indirect
+	golang.org/x/sys v0.17.0 // indirect
+	golang.org/x/term v0.17.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
+	gopkg.in/yaml.v3 v3.0.0-20220521103104-8f96da9f5d5e // indirect
 )
