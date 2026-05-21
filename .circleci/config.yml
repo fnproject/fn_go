@@ -1,11 +1,17 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.17
-    working_directory: /go/src/github.com/fnproject/fn_go
+      - image: cimg/go:1.24.0
+    working_directory: ~/project
     steps:
-      - checkout
-      - run: go get -v -t -d ./...
-      - run: go build -v ./...
-      - run: go test -v ./...
+      - run:
+          name: Checkout source over HTTPS
+          command: |
+            REPO_URL=$(echo "$CIRCLE_REPOSITORY_URL" | sed -e 's#git@github.com:#https://github.com/#')
+            git clone --no-checkout "$REPO_URL" .
+            git fetch origin "$CIRCLE_SHA1" --depth=1
+            git checkout -qf "$CIRCLE_SHA1"
+      - run: go version
+      - run: GOFLAGS=-mod=vendor go build -v ./...
+      - run: GOFLAGS=-mod=vendor go test -v ./...
