@@ -42,6 +42,7 @@ func TestCreateFn(t *testing.T) {
 	expectedAnnotations := fn.Annotations
 	expectedAnnotations[annotationCompartmentId] = "CreateFunctionCompartment"
 	expectedAnnotations[annotationInvokeEndpoint] = fmt.Sprintf("CreateFunctionInvokeEndpoint/20181201/functions/%s/actions/invoke", result.ID)
+	expectedAnnotations[annotationPCStrategy] = "NONE"
 
 	assert.Equal(t, fn.Name, result.Name)
 	assert.Equal(t, fn.AppID, result.AppID)

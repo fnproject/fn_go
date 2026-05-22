@@ -1,6 +1,6 @@
 module github.com/fnproject/fn_go
 
-go 1.17
+go 1.24.0
 
 require (
 	github.com/go-openapi/errors v0.19.8
@@ -10,10 +10,10 @@ require (
 	github.com/go-openapi/validate v0.19.12
 	github.com/golang/mock v1.4.4
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/oracle/oci-go-sdk/v65 v65.41.1
-	github.com/stretchr/testify v1.6.1
-	golang.org/x/crypto v0.19.0
-	golang.org/x/net v0.17.0
+	github.com/oracle/oci-go-sdk/v65 v65.113.0
+	github.com/stretchr/testify v1.9.0
+	golang.org/x/crypto v0.45.0
+	golang.org/x/net v0.47.0
 )
 
 require (
@@ -27,15 +27,16 @@ require (
 	github.com/go-openapi/loads v0.19.5 // indirect
 	github.com/go-openapi/spec v0.19.8 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
-	github.com/gofrs/flock v0.8.1 // indirect
+	github.com/gofrs/flock v0.10.0 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mitchellh/mapstructure v1.3.2 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sony/gobreaker v0.5.0 // indirect
+	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
 	go.mongodb.org/mongo-driver v1.4.2 // indirect
-	golang.org/x/sys v0.17.0 // indirect
-	golang.org/x/term v0.17.0 // indirect
-	golang.org/x/text v0.14.0 // indirect
+	golang.org/x/sys v0.38.0 // indirect
+	golang.org/x/term v0.37.0 // indirect
+	golang.org/x/text v0.31.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20220521103104-8f96da9f5d5e // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
