@@ -122,7 +122,9 @@ func (t ociSigningRoundTripper) signRequest(request *http.Request) (err error) {
 		return fmt.Errorf("Date header must be present and non-empty on request")
 	}
 	if request.Method == "POST" || request.Method == "PATCH" || request.Method == "PUT" {
-		request.Header.Set("Content-Type", "application/json")
+		if request.Header.Get("Content-Type") == "" {
+			request.Header.Set("Content-Type", "application/json")
+		}
 		request.Header.Set("Content-Length", fmt.Sprintf("%d", request.ContentLength))
 	}
 
