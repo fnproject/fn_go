@@ -1,6 +1,6 @@
 module github.com/fnproject/fn_go
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/go-openapi/errors v0.19.8
@@ -10,10 +10,10 @@ require (
 	github.com/go-openapi/validate v0.19.12
 	github.com/golang/mock v1.4.4
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/oracle/oci-go-sdk/v65 v65.113.0
-	github.com/stretchr/testify v1.9.0
-	golang.org/x/crypto v0.45.0
-	golang.org/x/net v0.47.0
+	github.com/oracle/oci-go-sdk/v65 v65.126.0
+	github.com/stretchr/testify v1.10.0
+	golang.org/x/crypto v0.52.0
+	golang.org/x/net v0.54.0
 )
 
 require (
@@ -31,12 +31,12 @@ require (
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mitchellh/mapstructure v1.3.2 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/sony/gobreaker v0.5.0 // indirect
+	github.com/sony/gobreaker/v2 v2.4.0 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
 	go.mongodb.org/mongo-driver v1.4.2 // indirect
-	golang.org/x/sys v0.38.0 // indirect
-	golang.org/x/term v0.37.0 // indirect
-	golang.org/x/text v0.31.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
+	golang.org/x/term v0.43.0 // indirect
+	golang.org/x/text v0.37.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

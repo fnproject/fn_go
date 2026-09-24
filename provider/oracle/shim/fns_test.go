@@ -5,10 +5,165 @@ import (
 	"github.com/fnproject/fn_go/clientv2/fns"
 	"github.com/fnproject/fn_go/modelsv2"
 	"github.com/fnproject/fn_go/provider/oracle/shim/client"
+	"github.com/go-openapi/strfmt"
 	"github.com/golang/mock/gomock"
+	"github.com/oracle/oci-go-sdk/v65/functions"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
+
+func TestCreateCodeOnlyFunctionSourceDetailsDirect(t *testing.T) {
+	archiveBytes := []byte("zip-bytes")
+	fn := &modelsv2.Fn{
+		CodeOnly:          true,
+		SourceType:        "direct",
+		SourceArchive:     strfmt.Base64(archiveBytes),
+		RuntimeConfigType: "FUNCTION_UPDATE",
+		RuntimeName:       "python311.ol9",
+		Handler:           "hello_world.handler",
+	}
+
+	details, err := createCodeOnlyFunctionSourceDetails(fn)
+	assert.NoError(t, err)
+
+	archiveDetails, ok := details.(functions.CreateArchiveFunctionSourceDetails)
+	assert.True(t, ok)
+
+	directDetails, ok := archiveDetails.ArchiveSourceDetails.(functions.CreateDirectArchiveSourceDetails)
+	assert.True(t, ok)
+	assert.Equal(t, archiveBytes, directDetails.ArchiveFile)
+
+	runtimeConfig, ok := archiveDetails.RuntimeConfig.(functions.CreateFunctionUpdateRuntimeConfig)
+	assert.True(t, ok)
+	if assert.NotNil(t, runtimeConfig.FunctionsRuntimeName) {
+		assert.Equal(t, "python311.ol9", *runtimeConfig.FunctionsRuntimeName)
+	}
+	if assert.NotNil(t, archiveDetails.Handler) {
+		assert.Equal(t, "hello_world.handler", *archiveDetails.Handler)
+	}
+}
+
+func TestCreateCodeOnlyFunctionSourceDetailsObjectStorageManual(t *testing.T) {
+	fn := &modelsv2.Fn{
+		CodeOnly:              true,
+		SourceType:            "object-storage",
+		SourceBucketName:      "code-only-test-files",
+		SourceNamespace:       "oraclefunctionsdevelopm",
+		SourceObjectName:      "hello.0.0.1.zip",
+		SourceObjectVersionID: "object-version-id",
+		RuntimeConfigType:     "MANUAL",
+		RuntimeName:           "python311.ol9",
+		RuntimeVersionID:      "ocid1.functionsruntimeversion.oc1..exampleuniqueID",
+		Handler:               "hello_world.handler",
+	}
+
+	details, err := createCodeOnlyFunctionSourceDetails(fn)
+	assert.NoError(t, err)
+
+	archiveDetails, ok := details.(functions.CreateArchiveFunctionSourceDetails)
+	assert.True(t, ok)
+
+	objectStorageDetails, ok := archiveDetails.ArchiveSourceDetails.(functions.CreateObjectStorageArchiveSourceDetails)
+	assert.True(t, ok)
+	if assert.NotNil(t, objectStorageDetails.BucketName) {
+		assert.Equal(t, "code-only-test-files", *objectStorageDetails.BucketName)
+	}
+	if assert.NotNil(t, objectStorageDetails.Namespace) {
+		assert.Equal(t, "oraclefunctionsdevelopm", *objectStorageDetails.Namespace)
+	}
+	if assert.NotNil(t, objectStorageDetails.ObjectName) {
+		assert.Equal(t, "hello.0.0.1.zip", *objectStorageDetails.ObjectName)
+	}
+	if assert.NotNil(t, objectStorageDetails.ObjectVersionId) {
+		assert.Equal(t, "object-version-id", *objectStorageDetails.ObjectVersionId)
+	}
+
+	runtimeConfig, ok := archiveDetails.RuntimeConfig.(functions.CreateManualRuntimeConfig)
+	assert.True(t, ok)
+	if assert.NotNil(t, runtimeConfig.FunctionsRuntimeName) {
+		assert.Equal(t, "python311.ol9", *runtimeConfig.FunctionsRuntimeName)
+	}
+	if assert.NotNil(t, runtimeConfig.FunctionsRuntimeVersionId) {
+		assert.Equal(t, "ocid1.functionsruntimeversion.oc1..exampleuniqueID", *runtimeConfig.FunctionsRuntimeVersionId)
+	}
+	if assert.NotNil(t, archiveDetails.Handler) {
+		assert.Equal(t, "hello_world.handler", *archiveDetails.Handler)
+	}
+}
+
+func TestCreateArchiveSourceDetailsValidation(t *testing.T) {
+	_, err := createArchiveSourceDetails(&modelsv2.Fn{SourceType: "direct"})
+	assert.EqualError(t, err, "direct source requires archive bytes")
+
+	_, err = createArchiveSourceDetails(&modelsv2.Fn{SourceType: "object-storage", SourceBucketName: "bucket"})
+	assert.EqualError(t, err, "object-storage source requires bucket, namespace, and object name")
+
+	_, err = createArchiveSourceDetails(&modelsv2.Fn{SourceType: "something-else"})
+	assert.EqualError(t, err, `unsupported code-only source type "something-else"`)
+}
+
+func TestCreateArchiveSourceDetailsDirectFile(t *testing.T) {
+	archivePath := t.TempDir() + "/function.zip"
+	archiveBytes := []byte("zip-bytes-from-file")
+	assert.NoError(t, os.WriteFile(archivePath, archiveBytes, 0600))
+
+	details, err := createArchiveSourceDetails(&modelsv2.Fn{
+		SourceType: "direct",
+		SourceFile: archivePath,
+	})
+	assert.NoError(t, err)
+
+	directDetails, ok := details.(functions.CreateDirectArchiveSourceDetails)
+	assert.True(t, ok)
+	assert.Equal(t, archiveBytes, directDetails.ArchiveFile)
+}
+
+func TestCreateCodeOnlyUpdateSourceDetailsDirect(t *testing.T) {
+	archiveBytes := []byte("updated-zip-bytes")
+	fn := &modelsv2.Fn{
+		CodeOnly:          true,
+		SourceType:        "direct",
+		SourceArchive:     strfmt.Base64(archiveBytes),
+		RuntimeConfigType: "FUNCTION_UPDATE",
+		RuntimeName:       "python311.ol9",
+		Handler:           "hello_world.handler",
+	}
+
+	details, err := createCodeOnlyUpdateSourceDetails(fn)
+	assert.NoError(t, err)
+
+	archiveDetails, ok := details.(functions.UpdateArchiveFunctionSourceDetails)
+	assert.True(t, ok)
+
+	directDetails, ok := archiveDetails.ArchiveSourceDetails.(functions.UpdateDirectArchiveSourceDetails)
+	assert.True(t, ok)
+	assert.Equal(t, archiveBytes, directDetails.ArchiveFile)
+
+	runtimeConfig, ok := archiveDetails.RuntimeConfig.(functions.UpdateFunctionUpdateRuntimeConfig)
+	assert.True(t, ok)
+	if assert.NotNil(t, runtimeConfig.FunctionsRuntimeName) {
+		assert.Equal(t, "python311.ol9", *runtimeConfig.FunctionsRuntimeName)
+	}
+	if assert.NotNil(t, archiveDetails.Handler) {
+		assert.Equal(t, "hello_world.handler", *archiveDetails.Handler)
+	}
+}
+
+func TestCreateUpdateRuntimeConfigManualAllowsOmittedRuntimeName(t *testing.T) {
+	config, err := createUpdateRuntimeConfig(&modelsv2.Fn{
+		RuntimeConfigType: "MANUAL",
+		RuntimeVersionID:  "ocid1.functionsruntimeversion.oc1..exampleuniqueID",
+	})
+	assert.NoError(t, err)
+
+	manualConfig, ok := config.(functions.UpdateManualRuntimeConfig)
+	assert.True(t, ok)
+	assert.Nil(t, manualConfig.FunctionsRuntimeName)
+	if assert.NotNil(t, manualConfig.FunctionsRuntimeVersionId) {
+		assert.Equal(t, "ocid1.functionsruntimeversion.oc1..exampleuniqueID", *manualConfig.FunctionsRuntimeVersionId)
+	}
+}
 
 func TestCreateFn(t *testing.T) {
 	ctrl := gomock.NewController(t)
@@ -186,8 +341,8 @@ func TestUpdateFnConfig(t *testing.T) {
 	}
 	assert.Equal(t, expectedConfig, result.Config)
 	// Check we haven't inadvertently updated other values
-	assert.Equal(t, "OriginalFunctionImage", result.Image)
-	assert.Equal(t, "OriginalFunctionDigest", result.Annotations[annotationImageDigest])
+	assert.Equal(t, "GetFunctionImage", result.Image)
+	assert.Equal(t, "GetFunctionDigest", result.Annotations[annotationImageDigest])
 	assert.Equal(t, uint64(128), result.Memory)
 	assert.Equal(t, int32(30), *result.Timeout)
 }
