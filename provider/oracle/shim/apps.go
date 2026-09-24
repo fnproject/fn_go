@@ -201,9 +201,15 @@ func (s *appsShim) UpdateApp(params *apps.UpdateAppParams) (*apps.UpdateAppOK, e
 	if err != nil {
 		return nil, err
 	}
+	_ = res
+
+	getRes, err := s.ociClient.GetApplication(ctxOrBackground(params.Context), functions.GetApplicationRequest{ApplicationId: &params.AppID})
+	if err != nil {
+		return nil, err
+	}
 
 	return &apps.UpdateAppOK{
-		Payload: ociAppToV2(res.Application),
+		Payload: ociAppToV2(getRes.Application),
 	}, nil
 }
 

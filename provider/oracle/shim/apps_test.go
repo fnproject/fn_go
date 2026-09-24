@@ -171,7 +171,7 @@ func TestUpdateAppConfig(t *testing.T) {
 	}
 	assert.Equal(t, expectedConfig, result.Config)
 	// Check we haven't inadvertently changed syslogUrl
-	assert.Equal(t, "OriginalApplicationSyslogUrl", *result.SyslogURL)
+	assert.Equal(t, "GetApplicationSyslogUrl", *result.SyslogURL)
 }
 
 func TestUpdateAppSyslogUrl(t *testing.T) {
